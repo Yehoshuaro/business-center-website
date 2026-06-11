@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="pk-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a2230"/>
+      <stop offset="1" stop-color="#2c3648"/>
+    </linearGradient>
+    <linearGradient id="pk-floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#39455c"/>
+      <stop offset="1" stop-color="#222c3d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#pk-bg)"/>
+  <!-- ceiling beams -->
+  <g fill="#121a28">
+    <rect x="0" y="80" width="1600" height="60"/>
+    <rect x="0" y="240" width="1600" height="40"/>
+  </g>
+  <!-- strip lights -->
+  <g fill="#e8ecf4" opacity="0.9">
+    <rect x="180" y="150" width="280" height="10" rx="5"/>
+    <rect x="660" y="150" width="280" height="10" rx="5"/>
+    <rect x="1140" y="150" width="280" height="10" rx="5"/>
+  </g>
+  <!-- columns -->
+  <g fill="#101724">
+    <rect x="120" y="140" width="70" height="520"/>
+    <rect x="560" y="140" width="70" height="520"/>
+    <rect x="1000" y="140" width="70" height="520"/>
+    <rect x="1440" y="140" width="70" height="520"/>
+  </g>
+  <!-- floor -->
+  <rect x="0" y="640" width="1600" height="360" fill="url(#pk-floor)"/>
+  <!-- bay markings -->
+  <g stroke="#cfd6e2" stroke-width="8" opacity="0.65">
+    <line x1="240" y1="660" x2="120" y2="980"/>
+    <line x1="520" y1="660" x2="430" y2="980"/>
+    <line x1="800" y1="660" x2="800" y2="980"/>
+    <line x1="1080" y1="660" x2="1170" y2="980"/>
+    <line x1="1360" y1="660" x2="1480" y2="980"/>
+  </g>
+  <!-- level mark -->
+  <g>
+    <text x="800" y="470" font-family="Georgia, serif" font-size="220" fill="#dfe5ee" text-anchor="middle" opacity="0.9">P</text>
+    <text x="800" y="560" font-family="Arial, sans-serif" font-size="44" letter-spacing="14" fill="#aab4c4" text-anchor="middle">LEVEL 2</text>
+  </g>
+</svg>

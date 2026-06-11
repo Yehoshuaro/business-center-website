@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="at" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a3956"/>
+      <stop offset="1" stop-color="#0a1322"/>
+    </linearGradient>
+    <radialGradient id="atGlow" cx="0.5" cy="0.05" r="0.7">
+      <stop offset="0" stop-color="#f4e3b5" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#f4e3b5" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#at)"/>
+  <rect width="1600" height="1000" fill="url(#atGlow)"/>
+  <!-- skylight grid -->
+  <g stroke="#c8a268" stroke-opacity="0.45">
+    <path d="M300 80 L700 0 M500 80 L800 0 M700 80 L900 0 M900 80 L1000 0 M1100 80 L1100 0 M1300 80 L1200 0"/>
+    <path d="M300 80 H1300"/>
+    <path d="M260 200 H1340 M260 320 H1340"/>
+  </g>
+  <!-- floors (gallery walkways) -->
+  <g fill="#0a1424" stroke="#c8a268" stroke-opacity="0.4">
+    <rect x="100" y="380" width="1400" height="14"/>
+    <rect x="100" y="520" width="1400" height="14"/>
+    <rect x="100" y="660" width="1400" height="14"/>
+  </g>
+  <!-- railing posts -->
+  <g stroke="#c8a268" stroke-opacity="0.3" stroke-width="0.8">
+    <path d="M150 394 V520 M280 394 V520 M410 394 V520 M540 394 V520 M670 394 V520 M800 394 V520 M930 394 V520 M1060 394 V520 M1190 394 V520 M1320 394 V520 M1450 394 V520"/>
+    <path d="M150 534 V660 M280 534 V660 M410 534 V660 M540 534 V660 M670 534 V660 M800 534 V660 M930 534 V660 M1060 534 V660 M1190 534 V660 M1320 534 V660 M1450 534 V660"/>
+  </g>
+  <!-- ground floor pattern -->
+  <rect y="800" width="1600" height="200" fill="#070d18"/>
+  <g stroke="#c8a268" stroke-opacity="0.15">
+    <path d="M0 880 H1600 M0 940 H1600 M200 800 V1000 M600 800 V1000 M1000 800 V1000 M1400 800 V1000"/>
+  </g>
+  <text x="80" y="970" font-family="Georgia, serif" font-size="22" fill="#c8a268" fill-opacity="0.65" letter-spacing="5">CENTRAL ATRIUM</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#23304a"/>
+      <stop offset="1" stop-color="#0c1424"/>
+    </linearGradient>
+    <radialGradient id="warmlight" cx="0.7" cy="0.2" r="0.6">
+      <stop offset="0" stop-color="#f1cf8b" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#f1cf8b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#lg)"/>
+  <rect width="1600" height="1000" fill="url(#warmlight)"/>
+  <!-- back wall paneling -->
+  <g stroke="#c8a268" stroke-opacity="0.2">
+    <path d="M200 200 V740 M450 200 V740 M700 200 V740 M950 200 V740 M1200 200 V740 M1400 200 V740"/>
+  </g>
+  <!-- artwork frames -->
+  <g fill="none" stroke="#c8a268" stroke-opacity="0.5">
+    <rect x="540" y="240" width="160" height="220"/>
+    <rect x="760" y="240" width="160" height="220"/>
+    <rect x="980" y="240" width="160" height="220"/>
+  </g>
+  <g fill="#152339">
+    <rect x="548" y="248" width="144" height="204"/>
+    <rect x="768" y="248" width="144" height="204"/>
+    <rect x="988" y="248" width="144" height="204"/>
+  </g>
+  <!-- sofa -->
+  <rect x="280" y="640" width="640" height="120" rx="14" fill="#1a2a44"/>
+  <rect x="280" y="600" width="640" height="60" rx="10" fill="#22324d"/>
+  <g fill="#0a131f">
+    <rect x="290" y="760" width="20" height="60"/>
+    <rect x="890" y="760" width="20" height="60"/>
+  </g>
+  <!-- coffee table -->
+  <rect x="500" y="800" width="280" height="14" fill="#c8a268"/>
+  <rect x="510" y="814" width="260" height="10" fill="#0a131f"/>
+  <!-- armchair -->
+  <rect x="1040" y="640" width="220" height="160" rx="14" fill="#1a2a44"/>
+  <rect x="1040" y="600" width="220" height="60" rx="10" fill="#22324d"/>
+  <!-- floor lamp -->
+  <rect x="1340" y="400" width="6" height="500" fill="#c8a268" fill-opacity="0.7"/>
+  <ellipse cx="1343" cy="390" rx="40" ry="18" fill="#f1cf8b" fill-opacity="0.6"/>
+  <!-- floor -->
+  <rect y="900" width="1600" height="100" fill="#060c18"/>
+  <text x="80" y="970" font-family="Georgia, serif" font-size="22" fill="#c8a268" fill-opacity="0.6" letter-spacing="5">TENANT LOUNGE</text>
+</svg>

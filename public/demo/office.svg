@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="walls" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f2c44"/>
+      <stop offset="1" stop-color="#0d1626"/>
+    </linearGradient>
+    <linearGradient id="winsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5b7396"/>
+      <stop offset="1" stop-color="#1f3454"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#walls)"/>
+  <!-- big window -->
+  <rect x="100" y="120" width="900" height="500" fill="url(#winsky)"/>
+  <g stroke="#0a1320" stroke-width="3">
+    <path d="M550 120 V620 M100 370 H1000"/>
+  </g>
+  <rect x="100" y="120" width="900" height="500" fill="none" stroke="#c8a268" stroke-opacity="0.45" stroke-width="2"/>
+  <!-- distant city -->
+  <g fill="#1a2a44">
+    <rect x="120" y="430" width="80" height="190"/>
+    <rect x="220" y="380" width="60" height="240"/>
+    <rect x="300" y="450" width="100" height="170"/>
+    <rect x="420" y="400" width="80" height="220"/>
+    <rect x="520" y="460" width="70" height="160"/>
+    <rect x="640" y="420" width="90" height="200"/>
+    <rect x="760" y="450" width="60" height="170"/>
+    <rect x="840" y="390" width="100" height="230"/>
+  </g>
+  <!-- desk -->
+  <rect x="1080" y="500" width="460" height="40" fill="#0a131f"/>
+  <rect x="1080" y="500" width="460" height="4" fill="#c8a268"/>
+  <rect x="1100" y="540" width="20" height="180" fill="#0a131f"/>
+  <rect x="1500" y="540" width="20" height="180" fill="#0a131f"/>
+  <!-- monitor -->
+  <rect x="1200" y="380" width="220" height="130" rx="3" fill="#06101e" stroke="#c8a268" stroke-opacity="0.6"/>
+  <rect x="1300" y="510" width="20" height="20" fill="#06101e"/>
+  <!-- floor -->
+  <rect y="720" width="1600" height="280" fill="#060c18"/>
+  <g stroke="#c8b58a" stroke-opacity="0.08">
+    <path d="M0 800 H1600 M0 880 H1600"/>
+  </g>
+  <!-- chair -->
+  <ellipse cx="1300" cy="800" rx="80" ry="14" fill="#000" fill-opacity="0.6"/>
+  <rect x="1255" y="720" width="90" height="90" rx="10" fill="#0e1828" stroke="#c8a268" stroke-opacity="0.35"/>
+  <!-- plant -->
+  <rect x="160" y="700" width="60" height="100" fill="#0a131f"/>
+  <g fill="#2a4438">
+    <ellipse cx="190" cy="660" rx="50" ry="60"/>
+    <ellipse cx="160" cy="670" rx="32" ry="44"/>
+    <ellipse cx="220" cy="670" rx="32" ry="44"/>
+  </g>
+  <text x="80" y="970" font-family="Georgia, serif" font-size="22" fill="#c8a268" fill-opacity="0.6" letter-spacing="5">PRIVATE OFFICE · FLOOR 8</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e1a30"/>
+      <stop offset="0.5" stop-color="#2a3a58"/>
+      <stop offset="1" stop-color="#41526f"/>
+    </linearGradient>
+    <linearGradient id="tower" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#172238"/>
+      <stop offset="1" stop-color="#0a1120"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#dusk)"/>
+  <!-- distant skyline -->
+  <g fill="#0d1a2e" opacity="0.85">
+    <rect x="0" y="680" width="180" height="320"/>
+    <rect x="1420" y="700" width="180" height="300"/>
+    <rect x="1300" y="740" width="120" height="260"/>
+    <rect x="100" y="720" width="100" height="280"/>
+  </g>
+  <!-- main tower silhouette -->
+  <polygon points="430,1000 430,180 720,120 1170,120 1170,1000" fill="url(#tower)"/>
+  <!-- window grid -->
+  <g stroke="#e2c98b" stroke-opacity="0.35">
+    <g stroke-width="0.8">
+      <path d="M430 240 H1170 M430 300 H1170 M430 360 H1170 M430 420 H1170 M430 480 H1170 M430 540 H1170 M430 600 H1170 M430 660 H1170 M430 720 H1170 M430 780 H1170 M430 840 H1170 M430 900 H1170 M430 960 H1170"/>
+    </g>
+    <g stroke-width="0.6">
+      <path d="M490 180 V1000 M560 180 V1000 M630 180 V1000 M700 180 V1000 M770 120 V1000 M840 120 V1000 M910 120 V1000 M980 120 V1000 M1050 120 V1000 M1120 120 V1000"/>
+    </g>
+  </g>
+  <!-- lit windows scattered -->
+  <g fill="#f1d99a" fill-opacity="0.55">
+    <rect x="490" y="300" width="70" height="60"/>
+    <rect x="630" y="420" width="70" height="60"/>
+    <rect x="770" y="240" width="70" height="60"/>
+    <rect x="910" y="540" width="70" height="60"/>
+    <rect x="1050" y="660" width="70" height="60"/>
+    <rect x="700" y="780" width="70" height="60"/>
+    <rect x="560" y="900" width="70" height="60"/>
+    <rect x="980" y="360" width="70" height="60"/>
+    <rect x="840" y="720" width="70" height="60"/>
+    <rect x="1120" y="480" width="70" height="60"/>
+  </g>
+  <!-- ground plane -->
+  <rect y="940" width="1600" height="60" fill="#070d18"/>
+  <text x="80" y="980" font-family="Georgia, serif" font-size="22" fill="#c8a268" fill-opacity="0.6" letter-spacing="5">FACADE · NORTH ENTRANCE</text>
+</svg>

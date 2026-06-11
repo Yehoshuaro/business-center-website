@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sec-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#10151e"/>
+      <stop offset="1" stop-color="#1d2532"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sec-bg)"/>
+  <!-- monitor wall -->
+  <g>
+    <rect x="140" y="120" width="400" height="250" fill="#27344a"/>
+    <rect x="600" y="120" width="400" height="250" fill="#22304a"/>
+    <rect x="1060" y="120" width="400" height="250" fill="#2a3850"/>
+    <rect x="140" y="430" width="400" height="250" fill="#233048"/>
+    <rect x="600" y="430" width="400" height="250" fill="#293a55"/>
+    <rect x="1060" y="430" width="400" height="250" fill="#212e44"/>
+  </g>
+  <!-- screen content hints -->
+  <g fill="#3d527a" opacity="0.8">
+    <rect x="170" y="160" width="340" height="14"/>
+    <rect x="170" y="190" width="240" height="14"/>
+    <rect x="630" y="160" width="300" height="14"/>
+    <rect x="1090" y="160" width="340" height="14"/>
+    <rect x="170" y="470" width="280" height="14"/>
+    <rect x="630" y="470" width="340" height="14"/>
+    <rect x="1090" y="470" width="260" height="14"/>
+  </g>
+  <!-- rec dots -->
+  <g fill="#d9534f">
+    <circle cx="510" cy="150" r="8"/>
+    <circle cx="970" cy="150" r="8"/>
+    <circle cx="1430" cy="150" r="8"/>
+    <circle cx="510" cy="460" r="8"/>
+    <circle cx="970" cy="460" r="8"/>
+    <circle cx="1430" cy="460" r="8"/>
+  </g>
+  <!-- desk -->
+  <rect x="0" y="760" width="1600" height="240" fill="#0b0f16"/>
+  <rect x="0" y="740" width="1600" height="24" fill="#1a2330"/>
+  <!-- caption -->
+  <text x="800" y="900" font-family="Arial, sans-serif" font-size="40" letter-spacing="16" fill="#8b97aa" text-anchor="middle">SECURITY 24/7</text>
+</svg>
