@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { MeetingRoom } from '@/shared/types';
-import { readPersisted, writePersisted } from '@/shared/utils/persist';
+import { readPersisted } from '@/shared/utils/persist';
 import { seedMeetingRooms } from '@/data/seed';
 
 const KEY = 'bc.rooms';

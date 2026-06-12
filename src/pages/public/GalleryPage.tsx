@@ -1,8 +1,9 @@
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { GalleryImage } from '@/shared/types';
 import { useGalleryStore } from '@/store/gallery';
-import { cn } from '@/shared/utils';
+import { cn, pickLocale } from '@/shared/utils';
 import { Photo } from '@/shared/components/ui';
 import { PageHero, CTASection } from '@/shared/components/marketing/sections';
 
@@ -15,6 +16,8 @@ const CATEGORIES: { value: GalleryImage['category'] | 'all'; label: string }[] =
 ];
 
 export const GalleryPage = () => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
   const images = useGalleryStore((s) => s.items);
   const [cat, setCat] = useState<GalleryImage['category'] | 'all'>('all');
   const [lightbox, setLightbox] = useState<number | null>(null);
@@ -61,10 +64,10 @@ export const GalleryPage = () => {
                 idx % 6 === 0 ? 'col-span-2 row-span-2 aspect-square' : 'aspect-square',
               )}
             >
-              <Photo name={img.photo} alt={img.title} className="h-full w-full" imgClassName="transition-transform duration-500 group-hover:scale-105" />
+              <Photo name={img.photo} alt={pickLocale(img.title, lang)} className="h-full w-full" imgClassName="transition-transform duration-500 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
               <div className="absolute bottom-0 left-0 p-4 opacity-0 transition-opacity group-hover:opacity-100">
-                <div className="font-display text-sm text-white">{img.title}</div>
+                <div className="font-display text-sm text-white">{pickLocale(img.title, lang)}</div>
               </div>
             </button>
           ))}
@@ -83,10 +86,10 @@ export const GalleryPage = () => {
               <ChevronLeft className="h-8 w-8" />
             </button>
             <figure className="flex max-h-full max-w-4xl flex-col">
-              <Photo name={visible[lightbox].photo} alt={visible[lightbox].title} className="max-h-[70vh] w-full" imgClassName="object-contain" />
+              <Photo name={visible[lightbox].photo} alt={pickLocale(visible[lightbox].title, lang)} className="max-h-[70vh] w-full" imgClassName="object-contain" />
               <figcaption className="mt-4 text-center text-white">
-                <div className="font-display text-lg">{visible[lightbox].title}</div>
-                <div className="text-sm text-white/70">{visible[lightbox].caption}</div>
+                <div className="font-display text-lg">{pickLocale(visible[lightbox].title, lang)}</div>
+                <div className="text-sm text-white/70">{pickLocale(visible[lightbox].caption, lang)}</div>
               </figcaption>
             </figure>
             <button onClick={() => step(1)} className="hidden p-2 text-white/70 hover:text-white sm:block" aria-label="Next">

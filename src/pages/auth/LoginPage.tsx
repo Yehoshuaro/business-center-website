@@ -61,7 +61,7 @@ export const LoginPage = () => {
 
             {error && (
               <div className="mt-6 flex items-center gap-2 border border-danger/40 bg-danger/5 px-3 py-2.5 text-sm text-danger">
-                <AlertCircle className="h-4 w-4 shrink-0" /> {error}
+                <AlertCircle className="h-4 w-4 shrink-0" /> {t(error)}
               </div>
             )}
 
@@ -99,9 +99,9 @@ export const LoginPage = () => {
                   >
                     <span className="min-w-0">
                       <span className="block truncate font-medium">{d.email}</span>
-                      <span className="block truncate text-xs text-ink-muted">{d.label}</span>
+                      <span className="block truncate text-xs text-ink-muted">{t(d.labelKey)}</span>
                     </span>
-                    <span className={ROLE_META[d.role].badgeClass}>{ROLE_META[d.role].label}</span>
+                    <span className={ROLE_META[d.role].badgeClass}>{t(ROLE_META[d.role].labelKey)}</span>
                   </button>
                 ))}
               </div>

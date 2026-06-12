@@ -4,7 +4,7 @@ import { readPersisted, writePersisted } from '@/shared/utils/persist';
 import { seedNews } from '@/data/seed';
 import { uid } from '@/shared/utils';
 
-const KEY = 'bc.news';
+const KEY = 'bc.news.v2';
 
 interface NewsState {
   items: NewsArticle[];

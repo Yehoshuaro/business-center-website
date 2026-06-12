@@ -49,7 +49,7 @@ export const DashboardLayout = () => {
         {grouped.map((group) => (
           <div key={group.section} className="mb-6">
             <div className="px-3 pb-2 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-subtle">
-              {SECTION_LABELS[group.section]}
+              {t(SECTION_LABELS[group.section])}
             </div>
             <ul className="space-y-0.5">
               {group.items.map((item) => (
@@ -65,7 +65,7 @@ export const DashboardLayout = () => {
                     }
                   >
                     <Icon name={item.icon} className="h-4 w-4 shrink-0" />
-                    {item.label}
+                    {t(item.labelKey)}
                   </NavLink>
                 </li>
               ))}
@@ -106,7 +106,7 @@ export const DashboardLayout = () => {
             <Menu className="h-5 w-5" />
           </button>
           <div className="hidden text-sm text-ink-muted sm:block">
-            <span className={ROLE_META[session.role].badgeClass}>{ROLE_META[session.role].label}</span>
+            <span className={ROLE_META[session.role].badgeClass}>{t(ROLE_META[session.role].labelKey)}</span>
             <span className="ml-3">{session.title}</span>
           </div>
 

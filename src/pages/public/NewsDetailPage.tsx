@@ -1,10 +1,13 @@
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft } from 'lucide-react';
 import { useNewsStore } from '@/store/news';
-import { formatDay } from '@/shared/utils';
+import { formatDay, pickLocale } from '@/shared/utils';
 import { Photo, Avatar } from '@/shared/components/ui';
 
 export const NewsDetailPage = () => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
   const { slug } = useParams();
   const news = useNewsStore((s) => s.items);
   const article = news.find((n) => n.slug === slug && n.isPublished);
@@ -30,24 +33,24 @@ export const NewsDetailPage = () => {
 
       <header className="container-page max-w-3xl py-8 text-center">
         <div className="flex items-center justify-center gap-3 text-xs text-ink-subtle">
-          <span className="badge-accent">{article.tag}</span>
+          <span className="badge-accent">{pickLocale(article.tag, lang)}</span>
           <span>{formatDay(article.publishedAt)}</span>
         </div>
-        <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-balance md:text-5xl">{article.title}</h1>
+        <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-balance md:text-5xl">{pickLocale(article.title, lang)}</h1>
         <div className="mt-6 flex items-center justify-center gap-2 text-sm text-ink-muted">
           <Avatar name={article.author} className="h-7 w-7 text-[10px]" /> {article.author}
         </div>
       </header>
 
       <div className="container-page max-w-4xl">
-        <Photo name={article.photo} alt={article.title} className="aspect-[16/9] ring-soft" />
+        <Photo name={article.photo} alt={pickLocale(article.title, lang)} className="aspect-[16/9] ring-soft" />
       </div>
 
       <div className="container-page max-w-2xl py-10">
-        <p className="font-display text-xl leading-relaxed text-ink">{article.excerpt}</p>
+        <p className="font-display text-xl leading-relaxed text-ink">{pickLocale(article.excerpt, lang)}</p>
         <div className="mt-6 space-y-5 text-ink-muted leading-relaxed">
           {article.body.map((p, i) => (
-            <p key={i}>{p}</p>
+            <p key={i}>{pickLocale(p, lang)}</p>
           ))}
         </div>
       </div>
@@ -59,10 +62,10 @@ export const NewsDetailPage = () => {
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
               {more.map((n) => (
                 <Link key={n.id} to={`/news/${n.slug}`} className="group flex gap-4">
-                  <Photo name={n.photo} alt={n.title} className="aspect-square w-28 shrink-0" />
+                  <Photo name={n.photo} alt={pickLocale(n.title, lang)} className="aspect-square w-28 shrink-0" />
                   <div>
                     <div className="text-xs text-ink-subtle">{formatDay(n.publishedAt)}</div>
-                    <h3 className="mt-1 font-display text-lg leading-snug group-hover:underline">{n.title}</h3>
+                    <h3 className="mt-1 font-display text-lg leading-snug group-hover:underline">{pickLocale(n.title, lang)}</h3>
                   </div>
                 </Link>
               ))}

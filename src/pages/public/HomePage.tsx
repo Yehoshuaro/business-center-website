@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight, Check, Quote } from 'lucide-react';
 import { useOfficesStore } from '@/store/offices';
 import { useNewsStore } from '@/store/news';
 import { useSettingsStore } from '@/store/settings';
 import { seedServices, seedTestimonials } from '@/data/seed';
-import { formatDay } from '@/shared/utils';
+import { formatDay, pickLocale } from '@/shared/utils';
 import { Photo, SectionHeading, Icon } from '@/shared/components/ui';
 import { OfficeCard } from '@/shared/components/marketing/OfficeCard';
 import { StatsBand, CTASection } from '@/shared/components/marketing/sections';
 
 export const HomePage = () => {
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
   const offices = useOfficesStore((s) => s.items);
   const news = useNewsStore((s) => s.items);
   const settings = useSettingsStore((s) => s.settings);
@@ -129,8 +132,8 @@ export const HomePage = () => {
               <div className="flex h-10 w-10 items-center justify-center border border-line text-accent">
                 <Icon name={s.icon} className="h-5 w-5" />
               </div>
-              <h3 className="mt-4 font-display text-lg">{s.title}</h3>
-              <p className="mt-2 text-sm text-ink-muted leading-relaxed">{s.description}</p>
+              <h3 className="mt-4 font-display text-lg">{pickLocale(s.title, lang)}</h3>
+              <p className="mt-2 text-sm text-ink-muted leading-relaxed">{pickLocale(s.description, lang)}</p>
             </div>
           ))}
         </div>
@@ -149,10 +152,10 @@ export const HomePage = () => {
             {seedTestimonials.map((t) => (
               <figure key={t.id} className="card flex flex-col p-7">
                 <Quote className="h-7 w-7 text-accent/30" />
-                <blockquote className="mt-4 flex-1 text-ink leading-relaxed">“{t.quote}”</blockquote>
+                <blockquote className="mt-4 flex-1 text-ink leading-relaxed">“{pickLocale(t.quote, lang)}”</blockquote>
                 <figcaption className="mt-6 border-t border-line pt-4">
                   <div className="font-medium">{t.author}</div>
-                  <div className="text-sm text-ink-muted">{t.role}, {t.company}</div>
+                  <div className="text-sm text-ink-muted">{pickLocale(t.role, lang)}, {t.company}</div>
                 </figcaption>
               </figure>
             ))}
@@ -170,14 +173,14 @@ export const HomePage = () => {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {latestNews.map((n) => (
             <Link key={n.id} to={`/news/${n.slug}`} className="group card overflow-hidden transition-shadow hover:shadow-card-hover">
-              <Photo name={n.photo} alt={n.title} className="aspect-[16/10]" imgClassName="transition-transform duration-500 group-hover:scale-105" />
+              <Photo name={n.photo} alt={pickLocale(n.title, lang)} className="aspect-[16/10]" imgClassName="transition-transform duration-500 group-hover:scale-105" />
               <div className="p-5">
                 <div className="flex items-center gap-2 text-xs text-ink-subtle">
-                  <span className="badge-neutral">{n.tag}</span>
+                  <span className="badge-neutral">{pickLocale(n.tag, lang)}</span>
                   <span>{formatDay(n.publishedAt)}</span>
                 </div>
-                <h3 className="mt-3 font-display text-lg leading-snug group-hover:underline">{n.title}</h3>
-                <p className="mt-2 line-clamp-2 text-sm text-ink-muted">{n.excerpt}</p>
+                <h3 className="mt-3 font-display text-lg leading-snug group-hover:underline">{pickLocale(n.title, lang)}</h3>
+                <p className="mt-2 line-clamp-2 text-sm text-ink-muted">{pickLocale(n.excerpt, lang)}</p>
               </div>
             </Link>
           ))}

@@ -1,5 +1,18 @@
+import type { Localized } from '@/shared/types';
+
 export const uid = (): string =>
   Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+
+/**
+ * Resolve a {kk, ru, en} value for the active i18next language.
+ * Accepts a plain string too, so callers can stay tolerant of legacy data.
+ */
+export const pickLocale = (value: Localized | string, lang: string): string => {
+  if (typeof value === 'string') return value;
+  if (lang.startsWith('kk')) return value.kk;
+  if (lang.startsWith('en')) return value.en;
+  return value.ru;
+};
 
 export const cn = (...parts: Array<string | false | null | undefined>): string =>
   parts.filter(Boolean).join(' ');

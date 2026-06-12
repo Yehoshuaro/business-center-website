@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { LayoutGrid, List, Send, Trash2 } from 'lucide-react';
 import type { Lead, LeadStatus } from '@/shared/types';
 import { useLeadsStore } from '@/store/leads';

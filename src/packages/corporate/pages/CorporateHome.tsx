@@ -5,13 +5,14 @@ import { useOfficesStore } from '@/store/offices';
 import { useNewsStore } from '@/store/news';
 import { useSettingsStore } from '@/store/settings';
 import { seedServices } from '@/data/seed';
-import { formatDay } from '@/shared/utils';
+import { formatDay, pickLocale } from '@/shared/utils';
 import { Photo, SectionHeading, Icon } from '@/shared/components/ui';
 import { OfficeCard } from '@/shared/components/marketing/OfficeCard';
 import { StatsBand, CTASection } from '@/shared/components/marketing/sections';
 
 export const CorporateHome = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const offices = useOfficesStore((s) => s.items);
   const news = useNewsStore((s) => s.items);
   const settings = useSettingsStore((s) => s.settings);
@@ -61,8 +62,8 @@ export const CorporateHome = () => {
             {seedServices.slice(0, 8).map((s) => (
               <div key={s.id} className="bg-surface p-6">
                 <div className="flex h-10 w-10 items-center justify-center border border-line text-accent"><Icon name={s.icon} className="h-5 w-5" /></div>
-                <h3 className="mt-4 font-display text-lg">{s.title}</h3>
-                <p className="mt-2 text-sm text-ink-muted leading-relaxed">{s.description}</p>
+                <h3 className="mt-4 font-display text-lg">{pickLocale(s.title, lang)}</h3>
+                <p className="mt-2 text-sm text-ink-muted leading-relaxed">{pickLocale(s.description, lang)}</p>
               </div>
             ))}
           </div>
@@ -77,11 +78,11 @@ export const CorporateHome = () => {
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {latest.map((n) => (
             <Link key={n.id} to={`/corporate/news/${n.slug}`} className="group flex flex-col">
-              <Photo name={n.photo} alt={n.title} className="aspect-[16/10]" imgClassName="transition-transform duration-500 group-hover:scale-105" />
+              <Photo name={n.photo} alt={pickLocale(n.title, lang)} className="aspect-[16/10]" imgClassName="transition-transform duration-500 group-hover:scale-105" />
               <div className="mt-3 flex items-center gap-2 text-xs text-ink-subtle">
-                <span className="badge-neutral">{n.tag}</span><span>{formatDay(n.publishedAt)}</span>
+                <span className="badge-neutral">{pickLocale(n.tag, lang)}</span><span>{formatDay(n.publishedAt)}</span>
               </div>
-              <h3 className="mt-2 font-display text-lg leading-snug group-hover:underline">{n.title}</h3>
+              <h3 className="mt-2 font-display text-lg leading-snug group-hover:underline">{pickLocale(n.title, lang)}</h3>
             </Link>
           ))}
         </div>

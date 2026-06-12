@@ -15,11 +15,11 @@ interface AuthState {
   signOut: () => void;
 }
 
-/** Demo credentials surfaced on the login screen. */
-export const DEMO_ACCOUNTS: ReadonlyArray<{ role: Role; email: string; password: string; label: string }> = [
-  { role: 'admin', email: 'admin@crm.kz', password: 'admin123', label: 'Administrator — full system access' },
-  { role: 'manager', email: 'manager@crm.kz', password: 'manager123', label: 'Manager — CRM & leasing' },
-  { role: 'viewer', email: 'viewer@crm.kz', password: 'viewer123', label: 'Tenant — personal dashboard' },
+/** Demo credentials surfaced on the login screen. `labelKey` resolves via t(). */
+export const DEMO_ACCOUNTS: ReadonlyArray<{ role: Role; email: string; password: string; labelKey: string }> = [
+  { role: 'admin', email: 'admin@crm.kz', password: 'admin123', labelKey: 'auth.demo.admin' },
+  { role: 'manager', email: 'manager@crm.kz', password: 'manager123', labelKey: 'auth.demo.manager' },
+  { role: 'viewer', email: 'viewer@crm.kz', password: 'viewer123', labelKey: 'auth.demo.viewer' },
 ];
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -29,10 +29,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     const account = getAccounts().find((a) => a.email.toLowerCase() === normalized);
 
     if (!account || account.password !== password) {
-      return { ok: false, error: 'Incorrect email or password.' };
+      return { ok: false, error: 'auth.errors.invalid' };
     }
     if (account.status === 'disabled') {
-      return { ok: false, error: 'This account has been disabled. Contact an administrator.' };
+      return { ok: false, error: 'auth.errors.disabled' };
     }
 
     const session: Session = {

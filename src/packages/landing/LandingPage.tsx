@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight, Check, MapPin, Repeat, ShieldCheck, Sparkles, Phone, Mail, Clock, Menu, X, LayoutGrid, Quote } from 'lucide-react';
+import { ArrowRight, MapPin, Repeat, ShieldCheck, Sparkles, Phone, Mail, Clock, Menu, X, LayoutGrid, Quote } from 'lucide-react';
 import { useOfficesStore } from '@/store/offices';
 import { useGalleryStore } from '@/store/gallery';
 import { useSettingsStore } from '@/store/settings';
 import { seedTestimonials } from '@/data/seed';
-import { cn } from '@/shared/utils';
+import { pickLocale } from '@/shared/utils';
 import { BrandMark } from '@/shared/components/layout/BrandMark';
 import { Photo } from '@/shared/components/ui';
 import { OfficeCard } from '@/shared/components/marketing/OfficeCard';
@@ -19,7 +19,8 @@ const SECTIONS = ['about', 'benefits', 'offices', 'gallery', 'contact'] as const
 const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
 export const LandingPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const offices = useOfficesStore((s) => s.items);
   const gallery = useGalleryStore((s) => s.items);
   const settings = useSettingsStore((s) => s.settings);
@@ -167,7 +168,7 @@ export const LandingPage = () => {
             </div>
             <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
               {galleryPreview.map((g) => (
-                <Photo key={g.id} name={g.photo} alt={g.title} className="aspect-[4/3]" imgClassName="transition-transform duration-500 hover:scale-105" />
+                <Photo key={g.id} name={g.photo} alt={pickLocale(g.title, lang)} className="aspect-[4/3]" imgClassName="transition-transform duration-500 hover:scale-105" />
               ))}
             </div>
           </div>
@@ -180,10 +181,10 @@ export const LandingPage = () => {
             {seedTestimonials.map((tst) => (
               <figure key={tst.id} className="card flex flex-col p-7">
                 <Quote className="h-7 w-7 text-accent/30" />
-                <blockquote className="mt-4 flex-1 leading-relaxed">“{tst.quote}”</blockquote>
+                <blockquote className="mt-4 flex-1 leading-relaxed">“{pickLocale(tst.quote, lang)}”</blockquote>
                 <figcaption className="mt-6 border-t border-line pt-4">
                   <div className="font-medium">{tst.author}</div>
-                  <div className="text-sm text-ink-muted">{tst.role}, {tst.company}</div>
+                  <div className="text-sm text-ink-muted">{pickLocale(tst.role, lang)}, {tst.company}</div>
                 </figcaption>
               </figure>
             ))}

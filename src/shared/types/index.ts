@@ -5,6 +5,16 @@
 
 export type ThemeName = 'blue' | 'green' | 'gold' | 'black' | 'silver' | 'brown';
 
+/**
+ * A text value provided in all three supported languages.
+ * Resolve it for the active language with `pickLocale` (src/shared/utils).
+ */
+export interface Localized {
+  kk: string;
+  ru: string;
+  en: string;
+}
+
 // ===== Authentication & roles =====
 export type Role = 'admin' | 'manager' | 'viewer';
 
@@ -185,8 +195,8 @@ export interface Invoice {
 export interface GalleryImage {
   id: string;
   photo: string; // PhotoKey
-  title: string;
-  caption: string;
+  title: Localized;
+  caption: Localized;
   category: 'architecture' | 'interiors' | 'amenities' | 'events';
 }
 
@@ -195,10 +205,10 @@ export interface NewsArticle {
   id: string;
   slug: string;
   photo: string; // PhotoKey
-  tag: string;
-  title: string;
-  excerpt: string;
-  body: string[]; // paragraphs
+  tag: Localized;
+  title: Localized;
+  excerpt: Localized;
+  body: Localized[]; // paragraphs
   author: string;
   publishedAt: string;
   isPublished: boolean;
@@ -207,9 +217,9 @@ export interface NewsArticle {
 // ===== Testimonials =====
 export interface Testimonial {
   id: string;
-  quote: string;
+  quote: Localized;
   author: string;
-  role: string;
+  role: Localized;
   company: string;
 }
 
@@ -217,8 +227,8 @@ export interface Testimonial {
 export interface Service {
   id: string;
   icon: string; // lucide icon name
-  title: string;
-  description: string;
+  title: Localized;
+  description: Localized;
 }
 
 // ===== Site settings =====

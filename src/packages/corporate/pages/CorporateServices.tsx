@@ -2,12 +2,13 @@ import { useTranslation } from 'react-i18next';
 import { Users, Maximize, Clock } from 'lucide-react';
 import { useMeetingRoomsStore } from '@/store/meetingRooms';
 import { seedServices } from '@/data/seed';
-import { formatKzt } from '@/shared/utils';
+import { formatKzt, pickLocale } from '@/shared/utils';
 import { Photo, SectionHeading, Icon } from '@/shared/components/ui';
 import { PageHero, CTASection } from '@/shared/components/marketing/sections';
 
 export const CorporateServices = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
   const rooms = useMeetingRoomsStore((s) => s.items);
 
   return (
@@ -19,8 +20,8 @@ export const CorporateServices = () => {
           {seedServices.map((s) => (
             <div key={s.id} className="bg-surface p-6">
               <div className="flex h-11 w-11 items-center justify-center border border-line text-accent"><Icon name={s.icon} className="h-5 w-5" /></div>
-              <h3 className="mt-4 font-display text-lg">{s.title}</h3>
-              <p className="mt-2 text-sm text-ink-muted leading-relaxed">{s.description}</p>
+              <h3 className="mt-4 font-display text-lg">{pickLocale(s.title, lang)}</h3>
+              <p className="mt-2 text-sm text-ink-muted leading-relaxed">{pickLocale(s.description, lang)}</p>
             </div>
           ))}
         </div>

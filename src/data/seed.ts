@@ -415,59 +415,223 @@ export const seedInvoices: Invoice[] = [
 
 // ===== Gallery =====
 export const seedGallery: GalleryImage[] = [
-  { id: 'g-01', photo: 'facade', title: 'The facade', caption: 'A landmark presence in the city business district.', category: 'architecture' },
-  { id: 'g-02', photo: 'lobby', title: 'Main lobby', caption: 'A double-height lobby with reception and waiting area.', category: 'interiors' },
-  { id: 'g-03', photo: 'atrium', title: 'Central atrium', caption: 'Natural light and open-floor galleries.', category: 'architecture' },
-  { id: 'g-04', photo: 'openspace', title: 'Open-plan workspace', caption: 'A panoramic floor with 22 workstations on level 6.', category: 'interiors' },
-  { id: 'g-05', photo: 'conference', title: 'Forum hall', caption: 'Up to 120 guests, stage and professional sound.', category: 'events' },
-  { id: 'g-06', photo: 'meeting', title: 'Aspen meeting room', caption: 'An intimate room for fourteen, built for working sessions.', category: 'interiors' },
-  { id: 'g-07', photo: 'lounge', title: 'Tenant lounge', caption: 'A space for breaks and informal conversations.', category: 'amenities' },
-  { id: 'g-08', photo: 'night', title: 'Rooftop terrace', caption: 'An operable terrace with a city panorama.', category: 'amenities' },
-  { id: 'g-09', photo: 'parking', title: 'Underground parking', caption: '180 spaces, car wash and EV charging stations.', category: 'amenities' },
-  { id: 'g-10', photo: 'security', title: 'Security desk', caption: 'CCTV, access control and a round-the-clock security team.', category: 'amenities' },
-  { id: 'g-11', photo: 'coworking', title: 'Coworking lounge', caption: 'Flexible desks with all shared amenities included.', category: 'interiors' },
-  { id: 'g-12', photo: 'team', title: 'Studio room', caption: 'A focused room for interviews and short meetings.', category: 'events' },
+  {
+    id: 'g-01', photo: 'facade', category: 'architecture',
+    title: { en: 'The facade', ru: 'Фасад', kk: 'Қасбет' },
+    caption: {
+      en: 'A landmark presence in the city business district.',
+      ru: 'Знаковое здание в деловом центре города.',
+      kk: 'Қаланың іскерлік орталығындағы танымал ғимарат.',
+    },
+  },
+  {
+    id: 'g-02', photo: 'lobby', category: 'interiors',
+    title: { en: 'Main lobby', ru: 'Главный холл', kk: 'Басты холл' },
+    caption: {
+      en: 'A double-height lobby with reception and waiting area.',
+      ru: 'Двусветный холл с зоной ресепшн и ожидания.',
+      kk: 'Ресепшн және күту аймағы бар екі қабат биіктіктегі холл.',
+    },
+  },
+  {
+    id: 'g-03', photo: 'atrium', category: 'architecture',
+    title: { en: 'Central atrium', ru: 'Центральный атриум', kk: 'Орталық атриум' },
+    caption: {
+      en: 'Natural light and open-floor galleries.',
+      ru: 'Естественный свет и открытые галереи этажей.',
+      kk: 'Табиғи жарық және қабаттардың ашық галереялары.',
+    },
+  },
+  {
+    id: 'g-04', photo: 'openspace', category: 'interiors',
+    title: { en: 'Open-plan workspace', ru: 'Open-space', kk: 'Ашық кеңсе' },
+    caption: {
+      en: 'A panoramic floor with 22 workstations on level 6.',
+      ru: 'Панорамный этаж на 22 рабочих места на 6 уровне.',
+      kk: '6-деңгейдегі 22 жұмыс орны бар панорамалық қабат.',
+    },
+  },
+  {
+    id: 'g-05', photo: 'conference', category: 'events',
+    title: { en: 'Forum hall', ru: 'Зал Forum', kk: 'Forum залы' },
+    caption: {
+      en: 'Up to 120 guests, stage and professional sound.',
+      ru: 'До 120 гостей, сцена и профессиональный звук.',
+      kk: '120 қонаққа дейін, сахна және кәсіби дыбыс.',
+    },
+  },
+  {
+    id: 'g-06', photo: 'meeting', category: 'interiors',
+    title: { en: 'Aspen meeting room', ru: 'Переговорная Aspen', kk: 'Aspen келіссөз бөлмесі' },
+    caption: {
+      en: 'An intimate room for fourteen, built for working sessions.',
+      ru: 'Камерная комната на четырнадцать человек для рабочих сессий.',
+      kk: 'Жұмыс сессияларына арналған он төрт орындық шағын бөлме.',
+    },
+  },
+  {
+    id: 'g-07', photo: 'lounge', category: 'amenities',
+    title: { en: 'Tenant lounge', ru: 'Лаунж для резидентов', kk: 'Резиденттерге арналған лаунж' },
+    caption: {
+      en: 'A space for breaks and informal conversations.',
+      ru: 'Пространство для перерывов и неформального общения.',
+      kk: 'Үзіліс пен бейресми әңгімеге арналған кеңістік.',
+    },
+  },
+  {
+    id: 'g-08', photo: 'night', category: 'amenities',
+    title: { en: 'Rooftop terrace', ru: 'Терраса на крыше', kk: 'Шатырдағы терраса' },
+    caption: {
+      en: 'An operable terrace with a city panorama.',
+      ru: 'Открытая терраса с панорамой города.',
+      kk: 'Қала панорамасы бар ашық терраса.',
+    },
+  },
+  {
+    id: 'g-09', photo: 'parking', category: 'amenities',
+    title: { en: 'Underground parking', ru: 'Подземный паркинг', kk: 'Жерасты паркингі' },
+    caption: {
+      en: '180 spaces, car wash and EV charging stations.',
+      ru: '180 мест, автомойка и зарядные станции для электромобилей.',
+      kk: '180 орын, автокөлік жуу және электромобиль зарядтау станциялары.',
+    },
+  },
+  {
+    id: 'g-10', photo: 'security', category: 'amenities',
+    title: { en: 'Security desk', ru: 'Пост охраны', kk: 'Күзет посты' },
+    caption: {
+      en: 'CCTV, access control and a round-the-clock security team.',
+      ru: 'Видеонаблюдение, контроль доступа и круглосуточная охрана.',
+      kk: 'Бейнебақылау, кіруді бақылау және тәулік бойы күзет.',
+    },
+  },
+  {
+    id: 'g-11', photo: 'coworking', category: 'interiors',
+    title: { en: 'Coworking lounge', ru: 'Коворкинг-лаунж', kk: 'Коворкинг-лаунж' },
+    caption: {
+      en: 'Flexible desks with all shared amenities included.',
+      ru: 'Гибкие рабочие места со всеми общими удобствами.',
+      kk: 'Барлық ортақ ыңғайлылықтары бар икемді жұмыс орындары.',
+    },
+  },
+  {
+    id: 'g-12', photo: 'team', category: 'events',
+    title: { en: 'Studio room', ru: 'Комната Studio', kk: 'Studio бөлмесі' },
+    caption: {
+      en: 'A focused room for interviews and short meetings.',
+      ru: 'Комната для интервью и коротких встреч.',
+      kk: 'Сұхбат пен қысқа кездесулерге арналған бөлме.',
+    },
+  },
 ];
 
 // ===== News =====
 export const seedNews: NewsArticle[] = [
   {
-    id: 'n-01', slug: 'new-wing-opens', photo: 'news1', tag: 'Development', author: 'Alexandra Petrova',
-    title: 'The new wing opens this quarter',
-    excerpt: 'An additional 4,200 m² of lettable space and two conference halls.',
+    id: 'n-01', slug: 'new-wing-opens', photo: 'news1', author: 'Alexandra Petrova',
+    tag: { en: 'Development', ru: 'Развитие', kk: 'Даму' },
+    title: {
+      en: 'The new wing opens this quarter',
+      ru: 'Новое крыло открывается в этом квартале',
+      kk: 'Жаңа қанат осы тоқсанда ашылады',
+    },
+    excerpt: {
+      en: 'An additional 4,200 m² of lettable space and two conference halls.',
+      ru: 'Дополнительные 4 200 м² арендных площадей и два конференц-зала.',
+      kk: 'Қосымша 4 200 м² жалға берілетін алаң және екі конференц-зал.',
+    },
     body: [
-      'The new wing features Class-A engineering, a dedicated lift core and a tenant-only parking section. Commissioning is planned for the end of Q2 2026.',
-      'Leasing enquiries for the new floors are already open. The wing adds two conference halls, a wellness suite and an expanded coworking lounge to the existing amenities.',
+      {
+        en: 'The new wing features Class-A engineering, a dedicated lift core and a tenant-only parking section. Commissioning is planned for the end of Q2 2026.',
+        ru: 'Новое крыло получило инженерию класса A, отдельную лифтовую группу и парковочную секцию только для резидентов. Ввод в эксплуатацию запланирован на конец второго квартала 2026 года.',
+        kk: 'Жаңа қанат A класты инженериямен, жеке лифт тобымен және тек резиденттерге арналған паркинг секциясымен жабдықталған. Пайдалануға беру 2026 жылдың екінші тоқсанының соңына жоспарланған.',
+      },
+      {
+        en: 'Leasing enquiries for the new floors are already open. The wing adds two conference halls, a wellness suite and an expanded coworking lounge to the existing amenities.',
+        ru: 'Заявки на аренду новых этажей уже принимаются. Крыло добавляет к существующей инфраструктуре два конференц-зала, велнес-зону и расширенный коворкинг-лаунж.',
+        kk: 'Жаңа қабаттарды жалға алуға өтінімдер қазірден қабылданады. Қанат бар инфрақұрылымға екі конференц-зал, велнес аймағы және кеңейтілген коворкинг-лаунж қосады.',
+      },
     ],
     publishedAt: daysAgo(2), isPublished: true,
   },
   {
-    id: 'n-02', slug: 'resident-line-up-2026', photo: 'news2', tag: 'Community', author: 'Sofia Belova',
-    title: 'The 2026 resident line-up',
-    excerpt: 'Four new companies have joined the business center.',
+    id: 'n-02', slug: 'resident-line-up-2026', photo: 'news2', author: 'Sofia Belova',
+    tag: { en: 'Community', ru: 'Сообщество', kk: 'Қауымдастық' },
+    title: {
+      en: 'The 2026 resident line-up',
+      ru: 'Резиденты 2026 года',
+      kk: '2026 жылғы резиденттер',
+    },
+    excerpt: {
+      en: 'Four new companies have joined the business center.',
+      ru: 'К бизнес-центру присоединились четыре новые компании.',
+      kk: 'Бизнес-орталыққа төрт жаңа компания қосылды.',
+    },
     body: [
-      'The resident line-up has been joined by legal, engineering and creative-industry firms whose combined teams exceed 120 people.',
-      'We welcomed each new resident with an onboarding session and a community breakfast in the tenant lounge.',
+      {
+        en: 'The resident line-up has been joined by legal, engineering and creative-industry firms whose combined teams exceed 120 people.',
+        ru: 'К числу резидентов присоединились юридические, инженерные и компании из креативных индустрий, чьи команды в сумме превышают 120 человек.',
+        kk: 'Резиденттер қатарына заңгерлік, инженерлік және креативті индустрия компаниялары қосылды, олардың командалары жалпы саны 120 адамнан асады.',
+      },
+      {
+        en: 'We welcomed each new resident with an onboarding session and a community breakfast in the tenant lounge.',
+        ru: 'Каждого нового резидента мы встретили вводной сессией и общим завтраком в лаунже для резидентов.',
+        kk: 'Әрбір жаңа резидентті кіріспе сессиямен және резиденттер лаунжындағы ортақ таңғы аспен қарсы алдық.',
+      },
     ],
     publishedAt: daysAgo(6), isPublished: true,
   },
   {
-    id: 'n-03', slug: 'forum-2026', photo: 'news3', tag: 'Events', author: 'Sofia Belova',
-    title: 'Forum 2026 · April 18',
-    excerpt: 'An annual gathering of tenants, partners and the city administration.',
+    id: 'n-03', slug: 'forum-2026', photo: 'news3', author: 'Sofia Belova',
+    tag: { en: 'Events', ru: 'События', kk: 'Іс-шаралар' },
+    title: {
+      en: 'Forum 2026 · April 18',
+      ru: 'Forum 2026 · 18 апреля',
+      kk: 'Forum 2026 · 18 сәуір',
+    },
+    excerpt: {
+      en: 'An annual gathering of tenants, partners and the city administration.',
+      ru: 'Ежегодная встреча резидентов, партнеров и городской администрации.',
+      kk: 'Резиденттердің, серіктестердің және қала әкімшілігінің жыл сайынғы кездесуі.',
+    },
     body: [
-      'Forum 2026 is a gathering devoted to urban development, commercial real estate and corporate culture. Registration opens early Q2.',
-      'The programme includes keynote sessions in the Forum hall, roundtables and a networking reception on the rooftop terrace.',
+      {
+        en: 'Forum 2026 is a gathering devoted to urban development, commercial real estate and corporate culture. Registration opens early Q2.',
+        ru: 'Forum 2026 посвящен городскому развитию, коммерческой недвижимости и корпоративной культуре. Регистрация открывается в начале второго квартала.',
+        kk: 'Forum 2026 қала дамуына, коммерциялық жылжымайтын мүлікке және корпоративтік мәдениетке арналған. Тіркеу екінші тоқсанның басында ашылады.',
+      },
+      {
+        en: 'The programme includes keynote sessions in the Forum hall, roundtables and a networking reception on the rooftop terrace.',
+        ru: 'В программе пленарные сессии в зале Forum, круглые столы и нетворкинг-прием на террасе.',
+        kk: 'Бағдарламаға Forum залындағы пленарлық сессиялар, дөңгелек үстелдер және террасадағы нетворкинг қабылдауы кіреді.',
+      },
     ],
     publishedAt: daysAgo(10), isPublished: true,
   },
   {
-    id: 'n-04', slug: 'access-control-upgrade', photo: 'security', tag: 'Service', author: 'Daniyar Akhmetov',
-    title: 'Access-control system upgrade',
-    excerpt: 'New NFC cards and mobile access are now available.',
+    id: 'n-04', slug: 'access-control-upgrade', photo: 'security', author: 'Daniyar Akhmetov',
+    tag: { en: 'Service', ru: 'Сервис', kk: 'Сервис' },
+    title: {
+      en: 'Access-control system upgrade',
+      ru: 'Обновление системы контроля доступа',
+      kk: 'Кіруді бақылау жүйесін жаңарту',
+    },
+    excerpt: {
+      en: 'New NFC cards and mobile access are now available.',
+      ru: 'Теперь доступны новые NFC-карты и мобильный доступ.',
+      kk: 'Енді жаңа NFC карталары мен мобильді кіру қолжетімді.',
+    },
     body: [
-      'NFC card replacement is free for tenants. Guests can be issued temporary access through the mobile app.',
-      'The upgraded system adds time-boxed visitor passes and integrates with the meeting-room booking calendar.',
+      {
+        en: 'NFC card replacement is free for tenants. Guests can be issued temporary access through the mobile app.',
+        ru: 'Замена NFC-карт для резидентов бесплатна. Гостям можно оформить временный доступ через мобильное приложение.',
+        kk: 'NFC карталарын ауыстыру резиденттер үшін тегін. Қонақтарға мобильді қолданба арқылы уақытша кіру рұқсатын беруге болады.',
+      },
+      {
+        en: 'The upgraded system adds time-boxed visitor passes and integrates with the meeting-room booking calendar.',
+        ru: 'Обновленная система добавляет гостевые пропуска с ограничением по времени и интегрируется с календарем бронирования переговорных.',
+        kk: 'Жаңартылған жүйе уақыты шектеулі қонақ рұқсаттамаларын қосады және келіссөз бөлмелерін брондау күнтізбесімен біріктіріледі.',
+      },
     ],
     publishedAt: daysAgo(15), isPublished: true,
   },
@@ -475,21 +639,109 @@ export const seedNews: NewsArticle[] = [
 
 // ===== Testimonials =====
 export const seedTestimonials: Testimonial[] = [
-  { id: 'tst-1', quote: 'Moving in was effortless and the facilities team is genuinely responsive. Our people love coming to the office.', author: 'Marina Klein', role: 'Office Manager', company: 'Northwind Capital' },
-  { id: 'tst-2', quote: 'The conference halls have hosted every one of our client events. The production quality is excellent.', author: 'Bekzat Orynbek', role: 'Managing Partner', company: 'Helios Engineering' },
-  { id: 'tst-3', quote: 'A genuinely premium address with the service to match. The location speaks for itself with our clients.', author: 'Gulnara Iskakova', role: 'Director', company: 'Meridian Audit' },
+  {
+    id: 'tst-1', author: 'Marina Klein', company: 'Northwind Capital',
+    role: { en: 'Office Manager', ru: 'Офис-менеджер', kk: 'Офис-менеджер' },
+    quote: {
+      en: 'Moving in was effortless and the facilities team is genuinely responsive. Our people love coming to the office.',
+      ru: 'Переезд прошел без забот, а служба эксплуатации действительно отзывчива. Нашим сотрудникам нравится приходить в офис.',
+      kk: 'Көшу еш қиындықсыз өтті, ал пайдалану қызметі шынымен жауапты. Қызметкерлерімізге кеңсеге келу ұнайды.',
+    },
+  },
+  {
+    id: 'tst-2', author: 'Bekzat Orynbek', company: 'Helios Engineering',
+    role: { en: 'Managing Partner', ru: 'Управляющий партнер', kk: 'Басқарушы серіктес' },
+    quote: {
+      en: 'The conference halls have hosted every one of our client events. The production quality is excellent.',
+      ru: 'Конференц-залы приняли все наши клиентские мероприятия. Качество организации на высоте.',
+      kk: 'Конференц-залдар біздің барлық клиенттік іс-шараларымызды қабылдады. Ұйымдастыру сапасы өте жоғары.',
+    },
+  },
+  {
+    id: 'tst-3', author: 'Gulnara Iskakova', company: 'Meridian Audit',
+    role: { en: 'Director', ru: 'Директор', kk: 'Директор' },
+    quote: {
+      en: 'A genuinely premium address with the service to match. The location speaks for itself with our clients.',
+      ru: 'По-настоящему премиальный адрес с соответствующим сервисом. Расположение говорит само за себя для наших клиентов.',
+      kk: 'Сервисі сай нағыз премиум мекенжай. Орналасуы клиенттеріміз үшін өзі сөйлейді.',
+    },
+  },
 ];
 
 // ===== Services / amenities =====
 export const seedServices: Service[] = [
-  { id: 's-1', icon: 'ShieldCheck', title: '24/7 Security', description: 'Round-the-clock security desk, CCTV coverage and managed access control on every floor.' },
-  { id: 's-2', icon: 'Car', title: 'Underground Parking', description: '180 spaces with EV charging, a car wash service and priority allocation for tenants.' },
-  { id: 's-3', icon: 'Wifi', title: 'Enterprise Connectivity', description: 'Redundant fibre, dedicated tenant VLANs and managed guest Wi-Fi throughout the building.' },
-  { id: 's-4', icon: 'Coffee', title: 'Coffee & Lounge', description: 'A ground-floor café and tenant lounges for breaks, informal meetings and events.' },
-  { id: 's-5', icon: 'Users', title: 'Conference Halls', description: 'Four bookable rooms from 8 to 120 seats with full AV and optional catering.' },
-  { id: 's-6', icon: 'Wrench', title: 'Facilities Management', description: 'An on-site team handling maintenance requests, fit-outs and day-to-day operations.' },
-  { id: 's-7', icon: 'Leaf', title: 'Wellness & Terrace', description: 'A rooftop terrace, wellness suite and green breakout spaces for tenant teams.' },
-  { id: 's-8', icon: 'Building2', title: 'Reception & Concierge', description: 'A staffed reception managing visitors, deliveries and tenant services.' },
+  {
+    id: 's-1', icon: 'ShieldCheck',
+    title: { en: '24/7 Security', ru: 'Охрана 24/7', kk: 'Күзет 24/7' },
+    description: {
+      en: 'Round-the-clock security desk, CCTV coverage and managed access control on every floor.',
+      ru: 'Круглосуточный пост охраны, видеонаблюдение и контроль доступа на каждом этаже.',
+      kk: 'Тәулік бойы күзет посты, бейнебақылау және әр қабатта кіруді бақылау.',
+    },
+  },
+  {
+    id: 's-2', icon: 'Car',
+    title: { en: 'Underground Parking', ru: 'Подземный паркинг', kk: 'Жерасты паркингі' },
+    description: {
+      en: '180 spaces with EV charging, a car wash service and priority allocation for tenants.',
+      ru: '180 мест с зарядкой для электромобилей, автомойкой и приоритетом для резидентов.',
+      kk: 'Электромобиль зарядтауы, автокөлік жуу және резиденттерге басымдық берілген 180 орын.',
+    },
+  },
+  {
+    id: 's-3', icon: 'Wifi',
+    title: { en: 'Enterprise Connectivity', ru: 'Корпоративный интернет', kk: 'Корпоративтік интернет' },
+    description: {
+      en: 'Redundant fibre, dedicated tenant VLANs and managed guest Wi-Fi throughout the building.',
+      ru: 'Резервируемая оптика, выделенные VLAN для резидентов и гостевой Wi-Fi по всему зданию.',
+      kk: 'Резервтелген талшықты желі, резиденттерге арналған VLAN және ғимарат бойынша қонақ Wi-Fi.',
+    },
+  },
+  {
+    id: 's-4', icon: 'Coffee',
+    title: { en: 'Coffee & Lounge', ru: 'Кофе и лаунж', kk: 'Кофе және лаунж' },
+    description: {
+      en: 'A ground-floor café and tenant lounges for breaks, informal meetings and events.',
+      ru: 'Кафе на первом этаже и лаунжи для перерывов, неформальных встреч и мероприятий.',
+      kk: 'Бірінші қабаттағы кафе және үзіліс, бейресми кездесулер мен іс-шараларға арналған лаунж.',
+    },
+  },
+  {
+    id: 's-5', icon: 'Users',
+    title: { en: 'Conference Halls', ru: 'Конференц-залы', kk: 'Конференц-залдар' },
+    description: {
+      en: 'Four bookable rooms from 8 to 120 seats with full AV and optional catering.',
+      ru: 'Четыре зала для бронирования от 8 до 120 мест с полным AV-оснащением и кейтерингом по запросу.',
+      kk: 'Толық AV жабдығы және сұраныс бойынша кейтерингі бар, 8-ден 120 орынға дейінгі брондауға болатын төрт зал.',
+    },
+  },
+  {
+    id: 's-6', icon: 'Wrench',
+    title: { en: 'Facilities Management', ru: 'Эксплуатация здания', kk: 'Ғимаратты пайдалану' },
+    description: {
+      en: 'An on-site team handling maintenance requests, fit-outs and day-to-day operations.',
+      ru: 'Команда на месте, обрабатывающая заявки на обслуживание, отделку и повседневные операции.',
+      kk: 'Қызмет көрсету өтінімдерін, әрлеуді және күнделікті операцияларды орындайтын орындағы команда.',
+    },
+  },
+  {
+    id: 's-7', icon: 'Leaf',
+    title: { en: 'Wellness & Terrace', ru: 'Велнес и терраса', kk: 'Велнес және терраса' },
+    description: {
+      en: 'A rooftop terrace, wellness suite and green breakout spaces for tenant teams.',
+      ru: 'Терраса на крыше, велнес-зона и зеленые зоны отдыха для команд резидентов.',
+      kk: 'Шатырдағы терраса, велнес аймағы және резидент командаларына арналған жасыл демалыс аймақтары.',
+    },
+  },
+  {
+    id: 's-8', icon: 'Building2',
+    title: { en: 'Reception & Concierge', ru: 'Ресепшн и консьерж', kk: 'Ресепшн және консьерж' },
+    description: {
+      en: 'A staffed reception managing visitors, deliveries and tenant services.',
+      ru: 'Ресепшн с персоналом, который управляет посетителями, доставкой и сервисами для резидентов.',
+      kk: 'Келушілерді, жеткізілімдерді және резидент сервистерін басқаратын қызметкері бар ресепшн.',
+    },
+  },
 ];
 
 // ===== Site settings =====
