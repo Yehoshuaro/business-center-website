@@ -87,10 +87,8 @@ export const LandingPage = () => {
           <div className="absolute inset-0 hero-glow" />
           <div className="container-page relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-2">
             <div>
-              <div className="inline-flex items-center gap-2 border border-line bg-surface px-3 py-1 text-xs text-ink-muted">
-                <span className="h-1.5 w-1.5 rounded-full bg-success" /> {t('landing.hero.eyebrow')}
-              </div>
-              <h1 className="mt-6 font-display text-4xl leading-[1.04] tracking-tight text-balance sm:text-5xl lg:text-6xl">
+              <div className="eyebrow mb-3">{t('landing.hero.eyebrow')}</div>
+              <h1 className="font-display text-4xl leading-[1.04] tracking-tight text-balance sm:text-5xl lg:text-6xl">
                 {t('landing.hero.title')}
               </h1>
               <p className="mt-6 max-w-xl text-lg text-ink-muted leading-relaxed">{t('landing.hero.subtitle')}</p>

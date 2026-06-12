@@ -72,7 +72,7 @@ export const LoginPage = () => {
               <Field label={t('auth.password')} htmlFor="password">
                 <div className="relative">
                   <input id="password" type={show ? 'text' : 'password'} autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className="pr-10" />
-                  <button type="button" onClick={() => setShow((v) => !v)} className="absolute inset-y-0 right-0 flex items-center px-3 text-ink-subtle hover:text-ink" aria-label={show ? 'Hide password' : 'Show password'}>
+                  <button type="button" onClick={() => setShow((v) => !v)} className="absolute inset-y-0 right-0 flex items-center px-3 text-ink-subtle hover:text-ink" aria-label={show ? t('auth.hidePassword') : t('auth.showPassword')}>
                     {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>

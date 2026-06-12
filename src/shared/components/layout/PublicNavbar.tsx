@@ -12,7 +12,7 @@ import { ThemeSwitcher } from '@/shared/components/common/ThemeSwitcher';
 const LINKS = [
   { to: '/platform', key: 'nav.home', end: true },
   { to: '/about', key: 'nav.about' },
-  { to: '/offices', key: 'nav.officesSpaces' },
+  { to: '/offices', key: 'nav.offices' },
   { to: '/gallery', key: 'nav.gallery' },
   { to: '/services', key: 'nav.services' },
   { to: '/news', key: 'nav.news' },
@@ -42,12 +42,12 @@ export const PublicNavbar = () => {
         scrolled ? 'border-line bg-surface/90 backdrop-blur-md' : 'border-transparent bg-surface',
       )}
     >
-      <div className="container-page flex h-16 items-center justify-between gap-4">
+      <div className="mx-auto flex h-16 w-full max-w-[1400px] items-center justify-between gap-4 px-4 sm:px-6 md:px-8">
         <Link to="/platform" aria-label="Meridian home">
           <BrandMark />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-1 xl:flex">
           {LINKS.map((l) => (
             <NavLink
               key={l.to}
@@ -55,7 +55,7 @@ export const PublicNavbar = () => {
               end={l.end}
               className={({ isActive }) =>
                 cn(
-                  'px-3 py-2 text-sm transition-colors',
+                  'whitespace-nowrap px-2.5 py-2 text-sm transition-colors 2xl:px-3',
                   isActive ? 'text-ink font-medium' : 'text-ink-muted hover:text-ink',
                 )
               }
@@ -65,11 +65,18 @@ export const PublicNavbar = () => {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-2 xl:flex">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 whitespace-nowrap px-2 text-sm text-ink-muted transition-colors hover:text-ink"
+            title={t('nav.allPackages')}
+          >
+            <LayoutGrid className="h-4 w-4" /> {t('nav.allPackages')}
+          </Link>
           <LanguageSwitcher />
           <ThemeSwitcher />
           {session ? (
-            <Link to="/dashboard" className="btn-primary">
+            <Link to="/dashboard" className="btn-primary whitespace-nowrap">
               <LayoutDashboard className="h-4 w-4" />
               {t('nav.dashboard')}
             </Link>
@@ -78,15 +85,15 @@ export const PublicNavbar = () => {
               <Link to="/login" className="btn-ghost">
                 {t('nav.login')}
               </Link>
-              <Link to="/offices" className="btn-primary">
-                {t('nav.bookTour')}
+              <Link to="/offices" className="btn-primary whitespace-nowrap">
+                {t('nav.tourShort')}
               </Link>
             </>
           )}
           {session && <Avatar name={session.fullName} />}
         </div>
 
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-2 xl:hidden">
           <LanguageSwitcher />
           <ThemeSwitcher />
           <button
@@ -102,7 +109,7 @@ export const PublicNavbar = () => {
       </div>
 
       {open && (
-        <div className="border-t border-line bg-surface lg:hidden">
+        <div className="border-t border-line bg-surface xl:hidden">
           <nav className="container-page flex flex-col py-3">
             {LINKS.map((l) => (
               <NavLink

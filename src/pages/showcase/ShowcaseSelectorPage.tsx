@@ -50,10 +50,7 @@ export const ShowcaseSelectorPage = () => {
       <section className="relative overflow-hidden border-b border-line">
         <div className="absolute inset-0 hero-glow" />
         <div className="container-page relative py-16 text-center md:py-24">
-          <div className="mx-auto inline-flex items-center gap-2 border border-line bg-surface px-3 py-1 text-xs text-ink-muted">
-            <Layers className="h-3.5 w-3.5" /> {t('selector.badge')}
-          </div>
-          <h1 className="mx-auto mt-6 max-w-4xl font-display text-4xl leading-[1.05] tracking-tight text-balance md:text-6xl">
+          <h1 className="mx-auto max-w-4xl font-display text-4xl leading-[1.05] tracking-tight text-balance md:text-6xl">
             {t('selector.title')}
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-ink-muted leading-relaxed">{t('selector.subtitle')}</p>

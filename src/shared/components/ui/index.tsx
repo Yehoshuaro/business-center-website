@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Search, CheckCircle2 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
+import i18n from '@/i18n';
 import { cn, initials } from '@/shared/utils';
 import { ICONS } from './icons';
 
@@ -33,35 +34,32 @@ export const Badge = ({ tone = 'neutral', children }: { tone?: Tone; children: R
   <span className={TONE_CLASS[tone]}>{children}</span>
 );
 
-export const StatusBadge = {
-  space: (s: string) =>
-    badgeFor({ available: ['success', 'Available'], reserved: ['warning', 'Reserved'], occupied: ['neutral', 'Occupied'] }, s),
-  lead: (s: string) =>
-    badgeFor(
-      {
-        new: ['accent', 'New'], contacted: ['warning', 'Contacted'], touring: ['warning', 'Touring'],
-        negotiation: ['warning', 'Negotiation'], won: ['success', 'Won'], lost: ['neutral', 'Lost'],
-      },
-      s,
-    ),
-  booking: (s: string) =>
-    badgeFor({ confirmed: ['success', 'Confirmed'], pending: ['warning', 'Pending'], cancelled: ['danger', 'Cancelled'] }, s),
-  maintenance: (s: string) =>
-    badgeFor(
-      { open: ['accent', 'Open'], 'in-progress': ['warning', 'In progress'], resolved: ['success', 'Resolved'], closed: ['neutral', 'Closed'] },
-      s,
-    ),
-  priority: (s: string) =>
-    badgeFor({ low: ['neutral', 'Low'], medium: ['warning', 'Medium'], high: ['warning', 'High'], urgent: ['danger', 'Urgent'] }, s),
-  invoice: (s: string) =>
-    badgeFor({ paid: ['success', 'Paid'], due: ['warning', 'Due'], overdue: ['danger', 'Overdue'] }, s),
-  account: (s: string) => badgeFor({ active: ['success', 'Active'], disabled: ['neutral', 'Disabled'] }, s),
+/** Tone maps per status group. Labels resolve through i18n at `dashboard.status.<group>.<value>`. */
+const STATUS_TONES: Record<string, Record<string, Tone>> = {
+  space: { available: 'success', reserved: 'warning', occupied: 'neutral' },
+  lead: { new: 'accent', contacted: 'warning', touring: 'warning', negotiation: 'warning', won: 'success', lost: 'neutral' },
+  booking: { confirmed: 'success', pending: 'warning', cancelled: 'danger' },
+  maintenance: { open: 'accent', 'in-progress': 'warning', resolved: 'success', closed: 'neutral' },
+  priority: { low: 'neutral', medium: 'warning', high: 'warning', urgent: 'danger' },
+  invoice: { paid: 'success', due: 'warning', overdue: 'danger' },
+  account: { active: 'success', disabled: 'neutral' },
 };
 
-function badgeFor(map: Record<string, [Tone, string]>, value: string) {
-  const entry = map[value] ?? (['neutral', value] as [Tone, string]);
-  const [tone, label] = entry;
-  return <Badge tone={tone}>{label}</Badge>;
+export const StatusBadge = {
+  space: (s: string) => badgeFor('space', s),
+  lead: (s: string) => badgeFor('lead', s),
+  booking: (s: string) => badgeFor('booking', s),
+  maintenance: (s: string) => badgeFor('maintenance', s),
+  priority: (s: string) => badgeFor('priority', s),
+  invoice: (s: string) => badgeFor('invoice', s),
+  account: (s: string) => badgeFor('account', s),
+};
+
+function badgeFor(group: string, value: string) {
+  const tone = STATUS_TONES[group]?.[value] ?? 'neutral';
+  const key = `dashboard.status.${group}.${value}`;
+  const label = i18n.t(key);
+  return <Badge tone={tone}>{label === key ? value : label}</Badge>;
 }
 
 // ---------------------------------------------------------------------------
@@ -199,7 +197,7 @@ interface ConfirmProps {
   onCancel: () => void;
 }
 
-export const ConfirmDialog = ({ open, title, description, confirmLabel = 'Confirm', danger, onConfirm, onCancel }: ConfirmProps) => {
+export const ConfirmDialog = ({ open, title, description, confirmLabel, danger, onConfirm, onCancel }: ConfirmProps) => {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onCancel();
@@ -216,10 +214,10 @@ export const ConfirmDialog = ({ open, title, description, confirmLabel = 'Confir
         {description && <p className="text-sm text-ink-muted mb-5">{description}</p>}
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <button type="button" className="btn-secondary" onClick={onCancel}>
-            Cancel
+            {i18n.t('dashboard.actions.cancel')}
           </button>
           <button type="button" className={danger ? 'btn-primary bg-danger border-danger hover:bg-danger/90 hover:border-danger/90' : 'btn-primary'} onClick={onConfirm}>
-            {confirmLabel}
+            {confirmLabel ?? i18n.t('dashboard.actions.confirm')}
           </button>
         </div>
       </div>

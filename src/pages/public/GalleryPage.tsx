@@ -16,7 +16,7 @@ const CATEGORIES: { value: GalleryImage['category'] | 'all'; label: string }[] =
 ];
 
 export const GalleryPage = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const images = useGalleryStore((s) => s.items);
   const [cat, setCat] = useState<GalleryImage['category'] | 'all'>('all');
@@ -33,9 +33,9 @@ export const GalleryPage = () => {
   return (
     <>
       <PageHero
-        eyebrow="Gallery"
-        title="A look inside Meridian"
-        subtitle="From the facade to the rooftop terrace — explore the spaces your team would call home."
+        eyebrow={t('platform.gallery.eyebrow')}
+        title={t('platform.gallery.title')}
+        subtitle={t('platform.gallery.subtitle')}
       />
 
       <section className="container-page py-10">
@@ -99,7 +99,7 @@ export const GalleryPage = () => {
         </div>
       )}
 
-      <CTASection title="Prefer to see it in person?" subtitle="Book a guided tour of the building and available spaces." />
+      <CTASection title={t('platform.gallery.ctaTitle')} subtitle={t('platform.gallery.ctaSubtitle')} />
     </>
   );
 };

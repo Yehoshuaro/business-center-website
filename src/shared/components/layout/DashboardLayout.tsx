@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, LogOut, ExternalLink, ChevronDown } from 'lucide-react';
+import { Menu, X, LogOut, ExternalLink, ChevronDown, LayoutGrid } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { useAuthStore } from '@/store/auth';
 import { DASHBOARD_NAV, SECTION_LABELS, ROLE_META, type NavItem } from '@/features/access/roles';
@@ -77,6 +77,9 @@ export const DashboardLayout = () => {
       <div className="border-t border-line p-3">
         <Link to="/platform" className="flex items-center gap-3 px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink">
           <ExternalLink className="h-4 w-4" /> {t('nav.viewPublicSite')}
+        </Link>
+        <Link to="/" className="flex items-center gap-3 px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-2 hover:text-ink">
+          <LayoutGrid className="h-4 w-4" /> {t('nav.allPackages')}
         </Link>
       </div>
     </div>

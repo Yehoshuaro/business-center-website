@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Check, Maximize, Users, Building, CalendarDays } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { useOfficesStore } from '@/store/offices';
@@ -9,6 +10,7 @@ import { formatKzt, formatDay } from '@/shared/utils';
 import { DashHeader, Photo, StatusBadge, EmptyState } from '@/shared/components/ui';
 
 export const MySpacesPage = () => {
+  const { t } = useTranslation();
   const session = useAuthStore((s) => s.session)!;
   const offices = useOfficesStore((s) => s.items);
   const tenants = useTenantsStore((s) => s.items);
@@ -25,13 +27,13 @@ export const MySpacesPage = () => {
   return (
     <>
       <DashHeader
-        title="My Spaces"
-        subtitle={tenant ? `${tenant.companyName} · since ${formatDay(tenant.since)}` : 'Your leased spaces'}
-        actions={<Link to="/dashboard/maintenance" className="btn-secondary">Report an issue</Link>}
+        title={t('dashboard.mySpaces.title')}
+        subtitle={tenant ? t('dashboard.mySpaces.subtitle', { company: tenant.companyName, date: formatDay(tenant.since) }) : t('dashboard.mySpaces.fallback')}
+        actions={<Link to="/dashboard/maintenance" className="btn-secondary">{t('dashboard.mySpaces.reportIssue')}</Link>}
       />
 
       {mySpaces.length === 0 ? (
-        <EmptyState icon="Building" title="No leased spaces" description="Spaces assigned to your company will appear here." />
+        <EmptyState icon="Building" title={t('dashboard.mySpaces.noneTitle')} description={t('dashboard.mySpaces.noneDesc')} />
       ) : (
         <div className="grid gap-6">
           {mySpaces.map((o) => (
@@ -48,12 +50,12 @@ export const MySpacesPage = () => {
                 <p className="mt-2 text-sm text-ink-muted">{o.description}</p>
                 <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-muted">
                   <span className="inline-flex items-center gap-1.5"><Maximize className="h-4 w-4" /> {o.area} m²</span>
-                  <span className="inline-flex items-center gap-1.5"><Users className="h-4 w-4" /> {o.capacity} seats</span>
-                  <span className="inline-flex items-center gap-1.5"><Building className="h-4 w-4" /> Floor {o.floor}</span>
-                  <span className="font-medium text-ink">{formatKzt(o.monthlyPrice)} / mo</span>
+                  <span className="inline-flex items-center gap-1.5"><Users className="h-4 w-4" /> {o.capacity} {t('dashboard.common.seats')}</span>
+                  <span className="inline-flex items-center gap-1.5"><Building className="h-4 w-4" /> {t('dashboard.common.floor')} {o.floor}</span>
+                  <span className="font-medium text-ink">{formatKzt(o.monthlyPrice)} {t('dashboard.common.perMonth')}</span>
                 </div>
                 <div className="mt-5 border-t border-line pt-4">
-                  <div className="eyebrow mb-2">Included</div>
+                  <div className="eyebrow mb-2">{t('dashboard.mySpaces.included')}</div>
                   <ul className="grid gap-2 sm:grid-cols-2">
                     {o.features.map((f) => (
                       <li key={f} className="flex items-center gap-2 text-sm text-ink-muted"><Check className="h-4 w-4 text-success" /> {f}</li>
@@ -68,10 +70,10 @@ export const MySpacesPage = () => {
 
       {/* Upcoming bookings */}
       <div className="mt-8">
-        <h2 className="mb-3 font-display text-xl">Upcoming room bookings</h2>
+        <h2 className="mb-3 font-display text-xl">{t('dashboard.mySpaces.upcoming')}</h2>
         {myBookings.length === 0 ? (
           <div className="card p-6 text-sm text-ink-muted">
-            No upcoming bookings. Need a meeting room? <Link to="/dashboard/maintenance" className="link-underline">Contact reception</Link> or ask your manager.
+            {t('dashboard.mySpaces.noUpcoming')} <Link to="/dashboard/maintenance" className="link-underline">{t('dashboard.mySpaces.contactReception')}</Link> {t('dashboard.mySpaces.orManager')}
           </div>
         ) : (
           <div className="grid gap-3">

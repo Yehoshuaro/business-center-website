@@ -11,7 +11,7 @@ import { OfficeCard } from '@/shared/components/marketing/OfficeCard';
 import { StatsBand, CTASection } from '@/shared/components/marketing/sections';
 
 export const HomePage = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const offices = useOfficesStore((s) => s.items);
   const news = useNewsStore((s) => s.items);
@@ -28,27 +28,22 @@ export const HomePage = () => {
         <div className="absolute inset-0 hero-glow" />
         <div className="container-page relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-2">
           <div>
-            <div className="inline-flex items-center gap-2 border border-line bg-surface px-3 py-1 text-xs text-ink-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-success" />
-              Now leasing · {settings.city}
-            </div>
-            <h1 className="mt-6 font-display text-4xl leading-[1.04] tracking-tight text-balance sm:text-5xl lg:text-6xl">
-              A premium address for modern business
+            <h1 className="font-display text-4xl leading-[1.04] tracking-tight text-balance sm:text-5xl lg:text-6xl">
+              {t('platform.home.heroTitle')}
             </h1>
             <p className="mt-6 max-w-xl text-lg text-ink-muted leading-relaxed">
-              {settings.centerName} brings together Class-A offices, conference halls and a full service
-              floor in the heart of the business district. Spaces that work as hard as your team.
+              {t('platform.home.heroSubtitle', { name: settings.centerName })}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/offices" className="btn-primary px-6">
-                Explore spaces <ArrowRight className="h-4 w-4" />
+                {t('platform.home.exploreSpaces')} <ArrowRight className="h-4 w-4" />
               </Link>
               <Link to="/contact" className="btn-secondary px-6">
-                Book a tour
+                {t('platform.home.bookTour')}
               </Link>
             </div>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-muted">
-              {['Flexible lease terms', 'Move-in ready', '24/7 access'].map((f) => (
+              {[t('platform.home.b1'), t('platform.home.b2'), t('platform.home.b3')].map((f) => (
                 <span key={f} className="inline-flex items-center gap-2">
                   <Check className="h-4 w-4 text-success" /> {f}
                 </span>
@@ -57,12 +52,7 @@ export const HomePage = () => {
           </div>
 
           <div className="relative">
-            <Photo name="facade" alt="Meridian Business Center facade" className="aspect-[4/5] ring-soft" />
-            <div className="absolute -bottom-5 -left-5 hidden w-48 bg-surface p-4 shadow-card-hover ring-1 ring-line sm:block">
-              <div className="eyebrow">Occupancy</div>
-              <div className="font-display text-3xl">98%</div>
-              <div className="text-xs text-ink-muted">across 9 floors</div>
-            </div>
+            <Photo name="facade" alt={settings.centerName} className="aspect-[4/5] ring-soft" />
           </div>
         </div>
       </section>
@@ -75,12 +65,12 @@ export const HomePage = () => {
       {/* Featured offices */}
       <section className="container-page py-10 md:py-16">
         <SectionHeading
-          eyebrow="Featured spaces"
-          title="Offices ready for your team"
-          subtitle="A selection of our most sought-after spaces, from private cabinets to full-floor suites."
+          eyebrow={t('platform.home.featuredEyebrow')}
+          title={t('platform.home.featuredTitle')}
+          subtitle={t('platform.home.featuredSubtitle')}
           actions={
             <Link to="/offices" className="btn-secondary">
-              View all spaces <ArrowRight className="h-4 w-4" />
+              {t('platform.home.viewAllSpaces')} <ArrowRight className="h-4 w-4" />
             </Link>
           }
         />
@@ -94,21 +84,19 @@ export const HomePage = () => {
       {/* About teaser */}
       <section className="border-y border-line bg-surface-2">
         <div className="container-page grid items-center gap-12 py-16 lg:grid-cols-2">
-          <Photo name="atrium" alt="Central atrium" className="aspect-[16/11]" />
+          <Photo name="atrium" alt={t('platform.home.whyTitle')} className="aspect-[16/11]" />
           <div>
-            <div className="eyebrow mb-3">Why Meridian</div>
-            <h2 className="section-title text-balance">More than an office — a working environment</h2>
+            <div className="eyebrow mb-3">{t('platform.home.whyEyebrow')}</div>
+            <h2 className="section-title text-balance">{t('platform.home.whyTitle')}</h2>
             <p className="mt-4 text-ink-muted leading-relaxed">
-              Since {settings.foundedYear}, Meridian has been home to companies that value design,
-              service and a genuine sense of community. Every detail — from the lobby to the rooftop
-              terrace — is built to help your business perform.
+              {t('platform.home.whyText', { year: settings.foundedYear })}
             </p>
             <ul className="mt-6 space-y-3">
               {[
-                'On-site facilities team and concierge',
-                'Conference halls from 8 to 120 seats',
-                'Underground parking with EV charging',
-                'Fibre connectivity and managed Wi-Fi',
+                t('platform.home.w1'),
+                t('platform.home.w2'),
+                t('platform.home.w3'),
+                t('platform.home.w4'),
               ].map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm">
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />
@@ -117,7 +105,7 @@ export const HomePage = () => {
               ))}
             </ul>
             <Link to="/about" className="btn-secondary mt-8">
-              About the center <ArrowRight className="h-4 w-4" />
+              {t('platform.home.aboutCenter')} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
@@ -125,7 +113,7 @@ export const HomePage = () => {
 
       {/* Services */}
       <section className="container-page py-14 md:py-20">
-        <SectionHeading center eyebrow="Services & amenities" title="Everything taken care of" subtitle="A full service floor so your team can focus on the work that matters." />
+        <SectionHeading center eyebrow={t('platform.home.servicesEyebrow')} title={t('platform.home.servicesTitle')} subtitle={t('platform.home.servicesSubtitle')} />
         <div className="mt-12 grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
             <div key={s.id} className="bg-surface p-6">
@@ -139,7 +127,7 @@ export const HomePage = () => {
         </div>
         <div className="mt-8 text-center">
           <Link to="/services" className="btn-secondary">
-            All services <ArrowRight className="h-4 w-4" />
+            {t('platform.home.allServices')} <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </section>
@@ -147,7 +135,7 @@ export const HomePage = () => {
       {/* Testimonials */}
       <section className="border-y border-line bg-surface-2">
         <div className="container-page py-16 md:py-20">
-          <SectionHeading center eyebrow="Testimonials" title="Trusted by our residents" />
+          <SectionHeading center eyebrow={t('platform.home.testimonialsEyebrow')} title={t('platform.home.testimonialsTitle')} />
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
             {seedTestimonials.map((t) => (
               <figure key={t.id} className="card flex flex-col p-7">
@@ -166,9 +154,9 @@ export const HomePage = () => {
       {/* Latest news */}
       <section className="container-page py-14 md:py-20">
         <SectionHeading
-          eyebrow="News"
-          title="Latest from Meridian"
-          actions={<Link to="/news" className="btn-secondary">All news <ArrowRight className="h-4 w-4" /></Link>}
+          eyebrow={t('platform.home.newsEyebrow')}
+          title={t('platform.home.newsTitle')}
+          actions={<Link to="/news" className="btn-secondary">{t('platform.home.allNews')} <ArrowRight className="h-4 w-4" /></Link>}
         />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {latestNews.map((n) => (
@@ -188,8 +176,8 @@ export const HomePage = () => {
       </section>
 
       <CTASection
-        title="Ready to find your space at Meridian?"
-        subtitle="Tell us about your team and we'll prepare a shortlist and a private tour."
+        title={t('platform.home.ctaTitle')}
+        subtitle={t('platform.home.ctaSubtitle')}
       />
     </>
   );

@@ -27,7 +27,7 @@ export const ThemeSwitcher = ({ className }: { className?: string }) => {
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 z-20 mt-2 w-52 border border-line bg-surface shadow-card-hover" role="listbox">
+          <div className="absolute right-0 z-20 mt-2 w-44 border border-line bg-surface shadow-card-hover" role="listbox">
             <div className="border-b border-line px-3 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-subtle">
               {t('theme.label')}
             </div>
@@ -36,17 +36,17 @@ export const ThemeSwitcher = ({ className }: { className?: string }) => {
                 key={th.value}
                 onClick={() => { setTheme(th.value); setOpen(false); }}
                 className={cn(
-                  'flex w-full items-center justify-between px-3 py-2 text-sm transition-colors hover:bg-surface-2',
+                  'flex w-full items-center justify-between gap-2 whitespace-nowrap px-3 py-2 text-sm transition-colors hover:bg-surface-2',
                   theme === th.value ? 'text-ink' : 'text-ink-muted',
                 )}
                 role="option"
                 aria-selected={theme === th.value}
               >
                 <span className="flex items-center gap-2.5">
-                  <span className="h-4 w-4 rounded-full border border-line" style={{ background: th.swatch }} />
+                  <span className="h-4 w-4 shrink-0 rounded-full border border-line" style={{ background: th.swatch }} />
                   {t(th.labelKey)}
                 </span>
-                {theme === th.value && <Check className="h-4 w-4 text-accent" />}
+                {theme === th.value && <Check className="h-4 w-4 shrink-0 text-accent" />}
               </button>
             ))}
           </div>

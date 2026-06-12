@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ArrowRight } from 'lucide-react';
 import { useAuthStore } from '@/store/auth';
 import { useOfficesStore } from '@/store/offices';
@@ -11,6 +12,7 @@ import { formatKzt, formatKztCompact, formatDay, formatRelative } from '@/shared
 import { DashHeader, Metric, StatusBadge, EmptyState, Avatar } from '@/shared/components/ui';
 
 export const OverviewPage = () => {
+  const { t } = useTranslation();
   const session = useAuthStore((s) => s.session)!;
   const offices = useOfficesStore((s) => s.items);
   const tenants = useTenantsStore((s) => s.items);
@@ -35,23 +37,23 @@ export const OverviewPage = () => {
   return (
     <>
       <DashHeader
-        title={`Welcome back, ${session.fullName.split(' ')[0]}`}
-        subtitle="Here's what's happening across the business center today."
+        title={t('dashboard.overview.welcomeBack', { name: session.fullName.split(' ')[0] })}
+        subtitle={t('dashboard.overview.subtitle')}
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Metric label="Occupancy" value={`${occupiedRate}%`} hint="of all spaces" icon="Building" trend={{ value: '2.4%', positive: true }} />
-        <Metric label="Available spaces" value={available} hint="ready to let" icon="DoorOpen" />
-        <Metric label="Open pipeline" value={formatKztCompact(pipeline)} hint={`${openLeads.length} active leads`} icon="Target" />
-        <Metric label="Resident companies" value={tenants.filter((t) => t.isPublished).length} hint="published tenants" icon="Briefcase" />
+        <Metric label={t('dashboard.overview.occupancy')} value={`${occupiedRate}%`} hint={t('dashboard.overview.occupancyHint')} icon="Building" trend={{ value: '2.4%', positive: true }} />
+        <Metric label={t('dashboard.overview.available')} value={available} hint={t('dashboard.overview.availableHint')} icon="DoorOpen" />
+        <Metric label={t('dashboard.overview.pipeline')} value={formatKztCompact(pipeline)} hint={t('dashboard.overview.pipelineHint', { count: openLeads.length })} icon="Target" />
+        <Metric label={t('dashboard.overview.residents')} value={tenants.filter((t) => t.isPublished).length} hint={t('dashboard.overview.residentsHint')} icon="Briefcase" />
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-3">
         {/* Recent leads */}
         <div className="card lg:col-span-2">
           <div className="flex items-center justify-between border-b border-line px-5 py-4">
-            <h2 className="font-display text-lg">Recent leads</h2>
-            <Link to="/dashboard/leads" className="text-sm text-accent hover:underline">View all</Link>
+            <h2 className="font-display text-lg">{t('dashboard.overview.recentLeads')}</h2>
+            <Link to="/dashboard/leads" className="text-sm text-accent hover:underline">{t('dashboard.actions.viewAll')}</Link>
           </div>
           <div className="divide-y divide-line">
             {recentLeads.map((l) => (
@@ -74,33 +76,33 @@ export const OverviewPage = () => {
         {/* Action items */}
         <div className="space-y-6">
           <div className="card p-5">
-            <h2 className="font-display text-lg">Needs attention</h2>
+            <h2 className="font-display text-lg">{t('dashboard.overview.needsAttention')}</h2>
             <ul className="mt-4 space-y-3 text-sm">
               <li className="flex items-center justify-between">
-                <span className="text-ink-muted">Pending bookings</span>
+                <span className="text-ink-muted">{t('dashboard.overview.pendingBookings')}</span>
                 <Link to="/dashboard/bookings" className="font-medium hover:underline">{pendingBookings.length}</Link>
               </li>
               <li className="flex items-center justify-between">
-                <span className="text-ink-muted">Open maintenance</span>
+                <span className="text-ink-muted">{t('dashboard.overview.openMaintenance')}</span>
                 <Link to="/dashboard/maintenance" className="font-medium hover:underline">{openMaintenance.length}</Link>
               </li>
               <li className="flex items-center justify-between">
-                <span className="text-ink-muted">New leads today</span>
+                <span className="text-ink-muted">{t('dashboard.overview.newLeadsToday')}</span>
                 <Link to="/dashboard/leads" className="font-medium hover:underline">{leads.filter((l) => formatRelative(l.createdAt) === 'today').length}</Link>
               </li>
               <li className="flex items-center justify-between">
-                <span className="text-ink-muted">Overdue invoices</span>
+                <span className="text-ink-muted">{t('dashboard.overview.overdueInvoices')}</span>
                 <span className="font-medium text-danger">{invoices.filter((i) => i.status === 'overdue').length}</span>
               </li>
             </ul>
           </div>
 
           <div className="card p-5">
-            <h2 className="font-display text-lg">Quick actions</h2>
+            <h2 className="font-display text-lg">{t('dashboard.overview.quickActions')}</h2>
             <div className="mt-4 grid gap-2">
-              <Link to="/dashboard/leads" className="btn-secondary justify-between">Manage leads <ArrowRight className="h-4 w-4" /></Link>
-              <Link to="/dashboard/spaces" className="btn-secondary justify-between">Manage spaces <ArrowRight className="h-4 w-4" /></Link>
-              <Link to="/dashboard/bookings" className="btn-secondary justify-between">Review bookings <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/dashboard/leads" className="btn-secondary justify-between">{t('dashboard.overview.manageLeads')} <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/dashboard/spaces" className="btn-secondary justify-between">{t('dashboard.overview.manageSpaces')} <ArrowRight className="h-4 w-4" /></Link>
+              <Link to="/dashboard/bookings" className="btn-secondary justify-between">{t('dashboard.overview.reviewBookings')} <ArrowRight className="h-4 w-4" /></Link>
             </div>
           </div>
         </div>
@@ -113,6 +115,7 @@ export const OverviewPage = () => {
 // Tenant (viewer) overview
 // ---------------------------------------------------------------------------
 const TenantOverview = () => {
+  const { t } = useTranslation();
   const session = useAuthStore((s) => s.session)!;
   const tenants = useTenantsStore((s) => s.items);
   const offices = useOfficesStore((s) => s.items);
@@ -131,32 +134,32 @@ const TenantOverview = () => {
   return (
     <>
       <DashHeader
-        title={`Welcome, ${session.fullName.split(' ')[0]}`}
-        subtitle={tenant ? `${tenant.companyName} · Office ${tenant.officeCode}` : 'Your tenant dashboard'}
+        title={t('dashboard.overview.welcome', { name: session.fullName.split(' ')[0] })}
+        subtitle={tenant ? `${tenant.companyName} · ${t('dashboard.spaces.colSpace')} ${tenant.officeCode}` : t('dashboard.overview.tenantFallback')}
       />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Metric label="Leased spaces" value={mySpaces.length} hint="active" icon="Building" />
-        <Metric label="Outstanding" value={formatKztCompact(outstanding.reduce((s, i) => s + invoiceTotal(i), 0))} hint={`${outstanding.length} invoice(s)`} icon="Receipt" />
-        <Metric label="Open requests" value={openRequests.length} hint="maintenance" icon="Wrench" />
-        <Metric label="Upcoming bookings" value={myBookings.length} hint="meeting rooms" icon="CalendarDays" />
+        <Metric label={t('dashboard.overview.leasedSpaces')} value={mySpaces.length} hint={t('dashboard.overview.leasedHint')} icon="Building" />
+        <Metric label={t('dashboard.overview.outstanding')} value={formatKztCompact(outstanding.reduce((s, i) => s + invoiceTotal(i), 0))} hint={t('dashboard.overview.outstandingHint', { count: outstanding.length })} icon="Receipt" />
+        <Metric label={t('dashboard.overview.openRequests')} value={openRequests.length} hint={t('dashboard.overview.openRequestsHint')} icon="Wrench" />
+        <Metric label={t('dashboard.overview.upcomingBookings')} value={myBookings.length} hint={t('dashboard.overview.upcomingHint')} icon="CalendarDays" />
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <div className="card">
           <div className="flex items-center justify-between border-b border-line px-5 py-4">
-            <h2 className="font-display text-lg">Your spaces</h2>
-            <Link to="/dashboard/my-spaces" className="text-sm text-accent hover:underline">Details</Link>
+            <h2 className="font-display text-lg">{t('dashboard.overview.yourSpaces')}</h2>
+            <Link to="/dashboard/my-spaces" className="text-sm text-accent hover:underline">{t('dashboard.actions.details')}</Link>
           </div>
           {mySpaces.length === 0 ? (
-            <div className="p-5"><EmptyState icon="Building" title="No leased spaces" description="Spaces assigned to your company will appear here." /></div>
+            <div className="p-5"><EmptyState icon="Building" title={t('dashboard.overview.noLeasedSpaces')} description={t('dashboard.overview.noLeasedSpacesDesc')} /></div>
           ) : (
             <div className="divide-y divide-line">
               {mySpaces.map((o) => (
                 <div key={o.id} className="flex items-center justify-between px-5 py-3">
                   <div>
                     <div className="font-medium">{o.title}</div>
-                    <div className="text-sm text-ink-muted">#{o.code} · {o.area} m² · {o.capacity} seats</div>
+                    <div className="text-sm text-ink-muted">#{o.code} · {o.area} m² · {o.capacity} {t('dashboard.common.seats')}</div>
                   </div>
                   <div className="text-right text-sm">{o.monthlyPrice ? formatKzt(o.monthlyPrice) : '—'}</div>
                 </div>
@@ -167,15 +170,15 @@ const TenantOverview = () => {
 
         <div className="card">
           <div className="flex items-center justify-between border-b border-line px-5 py-4">
-            <h2 className="font-display text-lg">Recent invoices</h2>
-            <Link to="/dashboard/invoices" className="text-sm text-accent hover:underline">All invoices</Link>
+            <h2 className="font-display text-lg">{t('dashboard.overview.recentInvoices')}</h2>
+            <Link to="/dashboard/invoices" className="text-sm text-accent hover:underline">{t('dashboard.overview.allInvoices')}</Link>
           </div>
           <div className="divide-y divide-line">
             {myInvoices.slice(0, 4).map((i) => (
               <div key={i.id} className="flex items-center justify-between px-5 py-3">
                 <div>
                   <div className="font-medium">{i.number}</div>
-                  <div className="text-sm text-ink-muted">{i.period} · due {formatDay(i.dueAt)}</div>
+                  <div className="text-sm text-ink-muted">{i.period} · {t('dashboard.overview.due', { date: formatDay(i.dueAt) })}</div>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-sm">{formatKzt(invoiceTotal(i))}</span>

@@ -18,7 +18,7 @@ export const NewsPage = () => {
 
   return (
     <>
-      <PageHero eyebrow="News" title="What's happening at Meridian" subtitle="Announcements, resident stories and events from the business center." />
+      <PageHero eyebrow={t('platform.news.eyebrow')} title={t('platform.news.title')} subtitle={t('platform.news.subtitle')} />
 
       <section className="container-page py-12">
         {lead && (

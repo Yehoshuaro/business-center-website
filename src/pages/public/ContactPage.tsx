@@ -1,31 +1,33 @@
+import { useTranslation } from 'react-i18next';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useSettingsStore } from '@/store/settings';
 import { PageHero } from '@/shared/components/marketing/sections';
 import { LeadForm } from '@/shared/components/marketing/LeadForm';
 
 export const ContactPage = () => {
+  const { t } = useTranslation();
   const settings = useSettingsStore((s) => s.settings);
 
   const details = [
-    { icon: MapPin, label: 'Address', value: `${settings.address}, ${settings.city}` },
-    { icon: Phone, label: 'Phone', value: settings.phone, href: `tel:${settings.phone.replace(/\s/g, '')}` },
-    { icon: Mail, label: 'Email', value: settings.email, href: `mailto:${settings.email}` },
-    { icon: Clock, label: 'Working hours', value: settings.workingHours },
+    { icon: MapPin, label: t('platform.contact.address'), value: `${settings.address}, ${settings.city}` },
+    { icon: Phone, label: t('platform.contact.phone'), value: settings.phone, href: `tel:${settings.phone.replace(/\s/g, '')}` },
+    { icon: Mail, label: t('platform.contact.email'), value: settings.email, href: `mailto:${settings.email}` },
+    { icon: Clock, label: t('platform.contact.hours'), value: settings.workingHours },
   ];
 
   return (
     <>
       <PageHero
-        eyebrow="Contact"
-        title="Let's talk about your space"
-        subtitle="Tell us what your team needs and we'll respond within one business day with options and a tour."
+        eyebrow={t('platform.contact.eyebrow')}
+        title={t('platform.contact.title')}
+        subtitle={t('platform.contact.subtitle')}
       />
 
       <section className="container-page grid gap-12 py-14 lg:grid-cols-[1fr_1.2fr]">
         <div>
-          <h2 className="font-display text-2xl">Get in touch</h2>
+          <h2 className="font-display text-2xl">{t('platform.contact.getInTouch')}</h2>
           <p className="mt-3 text-ink-muted leading-relaxed">
-            Our leasing and events teams are based on-site. Drop by reception or reach us using the details below.
+            {t('platform.contact.getInTouchText')}
           </p>
           <ul className="mt-8 space-y-5">
             {details.map((d) => (
@@ -55,8 +57,8 @@ export const ContactPage = () => {
         </div>
 
         <div>
-          <h2 className="font-display text-2xl">Send an enquiry</h2>
-          <p className="mt-3 text-ink-muted">All fields marked are required.</p>
+          <h2 className="font-display text-2xl">{t('platform.contact.sendEnquiry')}</h2>
+          <p className="mt-3 text-ink-muted">{t('platform.contact.requiredNote')}</p>
           <div className="mt-6">
             <LeadForm />
           </div>

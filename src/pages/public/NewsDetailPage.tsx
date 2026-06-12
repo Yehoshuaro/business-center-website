@@ -6,7 +6,7 @@ import { formatDay, pickLocale } from '@/shared/utils';
 import { Photo, Avatar } from '@/shared/components/ui';
 
 export const NewsDetailPage = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const { slug } = useParams();
   const news = useNewsStore((s) => s.items);
@@ -15,8 +15,8 @@ export const NewsDetailPage = () => {
   if (!article) {
     return (
       <div className="container-page py-24 text-center">
-        <h1 className="font-display text-3xl">Article not found</h1>
-        <Link to="/news" className="btn-primary mt-6">Back to news</Link>
+        <h1 className="font-display text-3xl">{t('platform.news.title')}</h1>
+        <Link to="/news" className="btn-primary mt-6">{t('common.viewAllNews')}</Link>
       </div>
     );
   }
@@ -27,7 +27,7 @@ export const NewsDetailPage = () => {
     <article>
       <div className="container-page pt-8">
         <Link to="/news" className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink">
-          <ArrowLeft className="h-4 w-4" /> All news
+          <ArrowLeft className="h-4 w-4" /> {t('common.viewAllNews')}
         </Link>
       </div>
 
@@ -58,7 +58,7 @@ export const NewsDetailPage = () => {
       {more.length > 0 && (
         <section className="border-t border-line bg-surface-2">
           <div className="container-page py-14">
-            <h2 className="font-display text-2xl">More from Meridian</h2>
+            <h2 className="font-display text-2xl">{t('platform.home.newsTitle')}</h2>
             <div className="mt-6 grid gap-6 sm:grid-cols-2">
               {more.map((n) => (
                 <Link key={n.id} to={`/news/${n.slug}`} className="group flex gap-4">

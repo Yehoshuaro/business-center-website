@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Download, CreditCard } from 'lucide-react';
 import type { Invoice } from '@/shared/types';
 import { useAuthStore } from '@/store/auth';
@@ -8,6 +9,7 @@ import { formatKzt, formatDay } from '@/shared/utils';
 import { DashHeader, StatusBadge, Modal, EmptyState, Metric } from '@/shared/components/ui';
 
 export const InvoicesPage = () => {
+  const { t } = useTranslation();
   const session = useAuthStore((s) => s.session)!;
   const { items, setStatus } = useInvoicesStore();
   const settings = useSettingsStore((s) => s.settings);
@@ -22,20 +24,20 @@ export const InvoicesPage = () => {
 
   return (
     <>
-      <DashHeader title="Invoices" subtitle="Your billing history and outstanding balance." />
+      <DashHeader title={t('dashboard.invoices.title')} subtitle={t('dashboard.invoices.subtitle')} />
 
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
-        <Metric label="Outstanding" value={formatKzt(outstandingTotal)} hint={`${outstanding.length} unpaid`} icon="Receipt" />
-        <Metric label="Paid to date" value={formatKzt(paidThisYear)} icon="CircleCheck" />
-        <Metric label="Total invoices" value={myInvoices.length} icon="Files" />
+        <Metric label={t('dashboard.invoices.outstanding')} value={formatKzt(outstandingTotal)} hint={t('dashboard.invoices.outstandingHint', { count: outstanding.length })} icon="Receipt" />
+        <Metric label={t('dashboard.invoices.paid')} value={formatKzt(paidThisYear)} icon="CircleCheck" />
+        <Metric label={t('dashboard.invoices.total')} value={myInvoices.length} icon="Files" />
       </div>
 
       {myInvoices.length === 0 ? (
-        <EmptyState icon="Receipt" title="No invoices yet" description="Your invoices will appear here once issued." />
+        <EmptyState icon="Receipt" title={t('dashboard.invoices.noneTitle')} description={t('dashboard.invoices.noneDesc')} />
       ) : (
         <div className="table-wrap">
           <table className="data-table">
-            <thead><tr><th>Invoice</th><th>Period</th><th>Issued</th><th>Due</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+            <thead><tr><th>{t('dashboard.invoices.colInvoice')}</th><th>{t('dashboard.invoices.colPeriod')}</th><th>{t('dashboard.invoices.colIssued')}</th><th>{t('dashboard.invoices.colDue')}</th><th>{t('dashboard.invoices.colAmount')}</th><th>{t('dashboard.invoices.colStatus')}</th><th></th></tr></thead>
             <tbody>
               {myInvoices.map((i) => (
                 <tr key={i.id} className="cursor-pointer" onClick={() => setActive(i)}>
@@ -45,7 +47,7 @@ export const InvoicesPage = () => {
                   <td>{formatDay(i.dueAt)}</td>
                   <td>{formatKzt(invoiceTotal(i))}</td>
                   <td>{StatusBadge.invoice(i.status)}</td>
-                  <td className="text-right"><span className="text-sm text-accent">View</span></td>
+                  <td className="text-right"><span className="text-sm text-accent">{t('dashboard.actions.view')}</span></td>
                 </tr>
               ))}
             </tbody>
@@ -58,12 +60,12 @@ export const InvoicesPage = () => {
           open
           onClose={() => setActive(null)}
           title={active.number}
-          description={`${active.period} · issued ${formatDay(active.issuedAt)}`}
+          description={t('dashboard.invoices.issued', { period: active.period, date: formatDay(active.issuedAt) })}
           footer={
             <>
-              <button className="btn-secondary" onClick={() => window.print()}><Download className="h-4 w-4" /> Download PDF</button>
+              <button className="btn-secondary" onClick={() => window.print()}><Download className="h-4 w-4" /> {t('dashboard.invoices.downloadPdf')}</button>
               {active.status !== 'paid' && (
-                <button className="btn-primary" onClick={() => { setStatus(active.id, 'paid'); setActive(null); }}><CreditCard className="h-4 w-4" /> Mark as paid</button>
+                <button className="btn-primary" onClick={() => { setStatus(active.id, 'paid'); setActive(null); }}><CreditCard className="h-4 w-4" /> {t('dashboard.invoices.markPaid')}</button>
               )}
             </>
           }
@@ -76,21 +78,21 @@ export const InvoicesPage = () => {
             {StatusBadge.invoice(active.status)}
           </div>
           <div className="mt-6 flex justify-between border-y border-line py-3 text-sm">
-            <span className="text-ink-muted">Billing period</span><span>{active.period}</span>
+            <span className="text-ink-muted">{t('dashboard.invoices.billingPeriod')}</span><span>{active.period}</span>
           </div>
           <div className="flex justify-between border-b border-line py-3 text-sm">
-            <span className="text-ink-muted">Due date</span><span>{formatDay(active.dueAt)}</span>
+            <span className="text-ink-muted">{t('dashboard.invoices.dueDate')}</span><span>{formatDay(active.dueAt)}</span>
           </div>
 
           <table className="mt-6 w-full text-sm">
-            <thead><tr className="border-b border-line text-left text-ink-muted"><th className="py-2 font-medium">Description</th><th className="py-2 text-right font-medium">Amount</th></tr></thead>
+            <thead><tr className="border-b border-line text-left text-ink-muted"><th className="py-2 font-medium">{t('dashboard.invoices.description')}</th><th className="py-2 text-right font-medium">{t('dashboard.invoices.amount')}</th></tr></thead>
             <tbody>
               {active.lines.map((l, idx) => (
                 <tr key={idx} className="border-b border-line"><td className="py-2.5">{l.label}</td><td className="py-2.5 text-right">{formatKzt(l.amount)}</td></tr>
               ))}
             </tbody>
             <tfoot>
-              <tr><td className="pt-4 font-display text-lg">Total</td><td className="pt-4 text-right font-display text-lg">{formatKzt(invoiceTotal(active))}</td></tr>
+              <tr><td className="pt-4 font-display text-lg">{t('dashboard.invoices.total2')}</td><td className="pt-4 text-right font-display text-lg">{formatKzt(invoiceTotal(active))}</td></tr>
             </tfoot>
           </table>
         </Modal>
