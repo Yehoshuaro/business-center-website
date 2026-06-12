@@ -1,35 +1,25 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AppRouter } from './router';
-import { useSettingsStore } from '@/features/settings/store';
-import { useThemeStore } from '@/features/theme/store';
-import { useI18nStore } from '@/features/i18n/store';
+import { useThemeStore } from '@/store/theme';
 
 /**
- * Top-level component. On first mount it synchronises the theme / language
- * stores with the values saved in site settings — but only if the visitor
- * has no prior personal preference stored in localStorage. This way the
- * theme/language selected in the admin panel acts as a global default that
- * end users can still override via the public header switchers.
+ * Root component. Applies the selected colour theme to the document and keeps
+ * the <html lang> attribute in sync with the active language, then renders
+ * routes. Theme + language are persisted in localStorage and shared across all
+ * three showcase packages.
  */
 export const App = () => {
-  const settings = useSettingsStore((s) => s.settings);
-  const setTheme = useThemeStore((s) => s.setTheme);
-  const setLanguage = useI18nStore((s) => s.setLanguage);
-  const didInit = useRef(false);
+  const theme = useThemeStore((s) => s.theme);
+  const { i18n } = useTranslation();
 
   useEffect(() => {
-    if (didInit.current) return;
-    didInit.current = true;
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
-    if (typeof window === 'undefined') return;
-
-    if (!window.localStorage.getItem('bc.theme')) {
-      setTheme(settings.theme);
-    }
-    if (!window.localStorage.getItem('bc.language')) {
-      setLanguage(settings.language);
-    }
-  }, [settings.theme, settings.language, setTheme, setLanguage]);
+  useEffect(() => {
+    document.documentElement.setAttribute('lang', i18n.language);
+  }, [i18n.language]);
 
   return <AppRouter />;
 };

@@ -1,151 +1,245 @@
 import { useEffect } from 'react';
-import { cn } from '@/shared/utils';
-import type { OfficeStatus, LeadStatus, AdminUserStatus, ConferenceStatus } from '@/shared/types';
-import { useT } from '@/features/i18n/store';
+import { Search, CheckCircle2 } from 'lucide-react';
+import type { LucideProps } from 'lucide-react';
+import { cn, initials } from '@/shared/utils';
+import { ICONS } from './icons';
 
+export { Photo } from './Photo';
 export { Modal } from './Modal';
 
-interface PageHeaderProps {
+// ---------------------------------------------------------------------------
+// Dynamic lucide icon by name (used by data-driven services/nav).
+// Only icons listed in ./icons are bundled.
+// ---------------------------------------------------------------------------
+export const Icon = ({ name, ...props }: { name: string } & LucideProps) => {
+  const Cmp = ICONS[name] ?? ICONS.Square;
+  return <Cmp {...props} />;
+};
+
+// ---------------------------------------------------------------------------
+// Status / tone badges
+// ---------------------------------------------------------------------------
+type Tone = 'neutral' | 'success' | 'warning' | 'danger' | 'accent';
+
+const TONE_CLASS: Record<Tone, string> = {
+  neutral: 'badge-neutral',
+  success: 'badge-success',
+  warning: 'badge-warning',
+  danger: 'badge-danger',
+  accent: 'badge-accent',
+};
+
+export const Badge = ({ tone = 'neutral', children }: { tone?: Tone; children: React.ReactNode }) => (
+  <span className={TONE_CLASS[tone]}>{children}</span>
+);
+
+export const StatusBadge = {
+  space: (s: string) =>
+    badgeFor({ available: ['success', 'Available'], reserved: ['warning', 'Reserved'], occupied: ['neutral', 'Occupied'] }, s),
+  lead: (s: string) =>
+    badgeFor(
+      {
+        new: ['accent', 'New'], contacted: ['warning', 'Contacted'], touring: ['warning', 'Touring'],
+        negotiation: ['warning', 'Negotiation'], won: ['success', 'Won'], lost: ['neutral', 'Lost'],
+      },
+      s,
+    ),
+  booking: (s: string) =>
+    badgeFor({ confirmed: ['success', 'Confirmed'], pending: ['warning', 'Pending'], cancelled: ['danger', 'Cancelled'] }, s),
+  maintenance: (s: string) =>
+    badgeFor(
+      { open: ['accent', 'Open'], 'in-progress': ['warning', 'In progress'], resolved: ['success', 'Resolved'], closed: ['neutral', 'Closed'] },
+      s,
+    ),
+  priority: (s: string) =>
+    badgeFor({ low: ['neutral', 'Low'], medium: ['warning', 'Medium'], high: ['warning', 'High'], urgent: ['danger', 'Urgent'] }, s),
+  invoice: (s: string) =>
+    badgeFor({ paid: ['success', 'Paid'], due: ['warning', 'Due'], overdue: ['danger', 'Overdue'] }, s),
+  account: (s: string) => badgeFor({ active: ['success', 'Active'], disabled: ['neutral', 'Disabled'] }, s),
+};
+
+function badgeFor(map: Record<string, [Tone, string]>, value: string) {
+  const entry = map[value] ?? (['neutral', value] as [Tone, string]);
+  const [tone, label] = entry;
+  return <Badge tone={tone}>{label}</Badge>;
+}
+
+// ---------------------------------------------------------------------------
+// Section heading (marketing + dashboard)
+// ---------------------------------------------------------------------------
+interface SectionHeadingProps {
   eyebrow?: string;
   title: string;
   subtitle?: string;
+  center?: boolean;
   actions?: React.ReactNode;
-}
-
-export const PageHeader = ({ eyebrow, title, subtitle, actions }: PageHeaderProps) => (
-  <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6 sm:mb-8">
-    <div className="min-w-0">
-      {eyebrow && <div className="eyebrow mb-2">{eyebrow}</div>}
-      <h1 className="font-display text-2xl sm:text-3xl md:text-4xl tracking-tight text-balance break-words">{title}</h1>
-      {subtitle && (
-        <p className="mt-2 max-w-2xl text-ink-muted text-sm md:text-base leading-relaxed">{subtitle}</p>
-      )}
-    </div>
-    {actions && <div className="flex gap-2 flex-wrap">{actions}</div>}
-  </div>
-);
-
-export const SectionDivider = ({ label }: { label?: string }) => (
-  <div className="my-12 flex items-center gap-4">
-    <span className="flex-1 hairline" />
-    {label && <span className="eyebrow">{label}</span>}
-    <span className="flex-1 hairline" />
-  </div>
-);
-
-// Status badges with translated labels and themed colors
-export const OfficeStatusBadge = ({ status }: { status: OfficeStatus | ConferenceStatus }) => {
-  const { t } = useT();
-  const label = t(`status.${status}`);
-  const cls =
-    status === 'available'
-      ? 'badge-success'
-      : status === 'reserved'
-        ? 'badge-warning'
-        : 'badge-danger';
-  return <span className={cls}>{label}</span>;
-};
-
-export const LeadStatusBadge = ({ status }: { status: LeadStatus }) => {
-  const { t } = useT();
-  const map: Record<LeadStatus, string> = {
-    new: 'badge-accent',
-    contacted: 'badge-warning',
-    inProgress: 'badge-warning',
-    closed: 'badge-neutral',
-  };
-  return <span className={map[status]}>{t(`leadStatus.${status}`)}</span>;
-};
-
-export const UserStatusBadge = ({ status }: { status: AdminUserStatus }) => {
-  const { t } = useT();
-  return (
-    <span className={status === 'active' ? 'badge-success' : 'badge-neutral'}>
-      {t(`userStatus.${status}`)}
-    </span>
-  );
-};
-
-interface MetricCardProps {
-  label: string;
-  value: string | number;
-  hint?: string;
   className?: string;
 }
 
-export const MetricCard = ({ label, value, hint, className }: MetricCardProps) => (
-  <div className={cn('card p-5', className)}>
-    <div className="eyebrow">{label}</div>
-    <div className="mt-2 font-display text-3xl tracking-tight">{value}</div>
-    {hint && <div className="mt-1 text-xs text-ink-muted">{hint}</div>}
+export const SectionHeading = ({ eyebrow, title, subtitle, center, actions, className }: SectionHeadingProps) => (
+  <div
+    className={cn(
+      'flex flex-col gap-4 md:flex-row md:items-end md:justify-between',
+      center && 'md:flex-col md:items-center text-center',
+      className,
+    )}
+  >
+    <div className={cn('min-w-0', center && 'max-w-2xl')}>
+      {eyebrow && <div className="eyebrow mb-2">{eyebrow}</div>}
+      <h2 className="section-title text-balance">{title}</h2>
+      {subtitle && <p className="mt-3 max-w-2xl text-ink-muted leading-relaxed">{subtitle}</p>}
+    </div>
+    {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
   </div>
 );
 
-interface EmptyStateProps {
-  title?: string;
-  description?: string;
-  action?: React.ReactNode;
+// ---------------------------------------------------------------------------
+// Dashboard page header (compact)
+// ---------------------------------------------------------------------------
+export const DashHeader = ({ title, subtitle, actions }: { title: string; subtitle?: string; actions?: React.ReactNode }) => (
+  <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div className="min-w-0">
+      <h1 className="font-display text-2xl tracking-tight sm:text-3xl">{title}</h1>
+      {subtitle && <p className="mt-1 text-sm text-ink-muted">{subtitle}</p>}
+    </div>
+    {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
+  </div>
+);
+
+/** Search input with a leading icon. */
+export const SearchInput = ({ value, onChange, placeholder = 'Search…' }: { value: string; onChange: (v: string) => void; placeholder?: string }) => (
+  <div className="relative w-full sm:max-w-xs">
+    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-subtle" />
+    <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} className="pl-9" />
+  </div>
+);
+
+// ---------------------------------------------------------------------------
+// Metric / stat card
+// ---------------------------------------------------------------------------
+interface MetricProps {
+  label: string;
+  value: string | number;
+  hint?: string;
+  icon?: string;
+  trend?: { value: string; positive?: boolean };
 }
 
-export const EmptyState = ({ title, description, action }: EmptyStateProps) => {
-  const { t } = useT();
-  return (
-    <div className="card p-10 text-center">
-      <div className="font-display text-xl mb-2">{title ?? t('common.empty')}</div>
-      {description && <p className="text-sm text-ink-muted mb-4">{description}</p>}
-      {action}
+export const Metric = ({ label, value, hint, icon, trend }: MetricProps) => (
+  <div className="card p-5">
+    <div className="flex items-start justify-between gap-3">
+      <div className="eyebrow">{label}</div>
+      {icon && <Icon name={icon} className="h-4 w-4 text-ink-subtle" />}
     </div>
-  );
-};
+    <div className="mt-2 font-display text-3xl tracking-tight">{value}</div>
+    <div className="mt-1 flex items-center gap-2 text-xs">
+      {trend && (
+        <span className={trend.positive ? 'text-success' : 'text-danger'}>
+          {trend.positive ? '▲' : '▼'} {trend.value}
+        </span>
+      )}
+      {hint && <span className="text-ink-muted">{hint}</span>}
+    </div>
+  </div>
+);
 
-interface ConfirmDialogProps {
+// ---------------------------------------------------------------------------
+// Empty state
+// ---------------------------------------------------------------------------
+export const EmptyState = ({ icon = 'Inbox', title, description, action }: { icon?: string; title: string; description?: string; action?: React.ReactNode }) => (
+  <div className="card flex flex-col items-center p-12 text-center">
+    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-surface-2 text-ink-subtle">
+      <Icon name={icon} className="h-6 w-6" />
+    </div>
+    <div className="font-display text-xl">{title}</div>
+    {description && <p className="mt-2 max-w-sm text-sm text-ink-muted">{description}</p>}
+    {action && <div className="mt-5">{action}</div>}
+  </div>
+);
+
+// ---------------------------------------------------------------------------
+// Avatar (initials)
+// ---------------------------------------------------------------------------
+export const Avatar = ({ name, className }: { name: string; className?: string }) => (
+  <span
+    className={cn(
+      'inline-flex shrink-0 items-center justify-center rounded-full bg-accent text-accent-ink text-xs font-medium',
+      'h-9 w-9',
+      className,
+    )}
+    aria-hidden="true"
+  >
+    {initials(name)}
+  </span>
+);
+
+// ---------------------------------------------------------------------------
+// Form field wrapper
+// ---------------------------------------------------------------------------
+export const Field = ({ label, htmlFor, hint, children, className }: { label: string; htmlFor?: string; hint?: string; children: React.ReactNode; className?: string }) => (
+  <div className={className}>
+    <label htmlFor={htmlFor} className="field-label">
+      {label}
+    </label>
+    {children}
+    {hint && <p className="mt-1 text-xs text-ink-subtle">{hint}</p>}
+  </div>
+);
+
+// ---------------------------------------------------------------------------
+// Confirm dialog
+// ---------------------------------------------------------------------------
+interface ConfirmProps {
   open: boolean;
-  title?: string;
+  title: string;
   description?: string;
   confirmLabel?: string;
-  cancelLabel?: string;
+  danger?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-export const ConfirmDialog = ({
-  open,
-  title,
-  description,
-  confirmLabel,
-  cancelLabel,
-  onConfirm,
-  onCancel,
-}: ConfirmDialogProps) => {
-  const { t } = useT();
-
+export const ConfirmDialog = ({ open, title, description, confirmLabel = 'Confirm', danger, onConfirm, onCancel }: ConfirmProps) => {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onCancel();
     document.addEventListener('keydown', onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prev;
-    };
+    return () => document.removeEventListener('keydown', onKey);
   }, [open, onCancel]);
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink/40" role="dialog" aria-modal="true">
+    <div className="modal-overlay" role="dialog" aria-modal="true">
       <div className="absolute inset-0" onClick={onCancel} aria-hidden="true" />
-      <div className="relative w-full max-w-md card p-5 sm:p-6">
-        <h3 className="font-display text-lg sm:text-xl mb-2">{title ?? t('admin.confirmDelete')}</h3>
+      <div className="modal-card max-w-md p-6">
+        <h3 className="font-display text-xl mb-2">{title}</h3>
         {description && <p className="text-sm text-ink-muted mb-5">{description}</p>}
-        <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
+        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <button type="button" className="btn-secondary" onClick={onCancel}>
-            {cancelLabel ?? t('common.cancel')}
+            Cancel
           </button>
-          <button type="button" className="btn-primary" onClick={onConfirm}>
-            {confirmLabel ?? t('common.confirm')}
+          <button type="button" className={danger ? 'btn-primary bg-danger border-danger hover:bg-danger/90 hover:border-danger/90' : 'btn-primary'} onClick={onConfirm}>
+            {confirmLabel}
           </button>
         </div>
+      </div>
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Toast (lightweight, self-dismissing)
+// ---------------------------------------------------------------------------
+export const Toast = ({ message, onDone }: { message: string; onDone: () => void }) => {
+  useEffect(() => {
+    const t = setTimeout(onDone, 3200);
+    return () => clearTimeout(t);
+  }, [onDone]);
+  return (
+    <div className="fixed bottom-6 left-1/2 z-[60] -translate-x-1/2">
+      <div className="flex items-center gap-2 bg-accent px-4 py-3 text-sm text-accent-ink shadow-card-hover">
+        <CheckCircle2 className="h-4 w-4" />
+        {message}
       </div>
     </div>
   );

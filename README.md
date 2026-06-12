@@ -1,110 +1,155 @@
-# Web Atelier — витрина сайтов (3 тарифа)
+# Business Center Demo Design Showcase
 
-Чисто фронтенд-демо без backend: всё работает локально, данные сохраняются в `localStorage` браузера.
-На главной странице — выбор «Какой сайт вы хотите сделать?» с тремя тарифами, каждый открывает живое демо.
+A frontend demo that presents one business center at three levels of website
+implementation. It is meant to help a client see the difference between a simple
+landing page, a corporate multi-page site, and a full platform with a CRM, and
+then pick the option that fits their budget and needs.
 
-A pure frontend showcase, no backend required. The home page offers three website tiers,
-each opening a fully working live demo. All data persists in the browser's `localStorage`.
+The project runs entirely in the browser. There is no backend. All data is mock
+data kept in `localStorage`, so any changes you make survive a page reload but
+are local to your machine.
 
----
+## Purpose
 
-## Тарифы и маршруты / Tiers & routes
+This is a portfolio and sales tool, not a production SaaS. The home page is a
+package selector. From there you open any of the three demos and explore them as
+if they were real websites. The content is realistic but exists only for
+demonstration.
 
-| Тариф | Цена | Маршрут | Что внутри |
-|---|---|---|---|
-| 1. Лендинг + заявки | 150–250 тыс. ₸ | `/#/landing` | Одностраничный лендинг БЦ «Qazyna»: hero, карусель, удобства, форматы офисов, форма заявки с сохранением в localStorage и просмотром заявок |
-| 2. Сайт бизнес-центра | 350–550 тыс. ₸ | `/#/site` | Многостраничный сайт: офисы, конференц-залы, арендаторы, новости, контакты + полноценная админ-панель с CRUD и лидами |
-| 3. CRM | от 650 тыс. ₸ | `/#/crm/login` | CRM отдела аренды: роли, канбан сделок с drag-and-drop, клиенты, задачи, дашборд с графиками, управление пользователями |
+## Packages
 
-Из любого демо можно вернуться на витрину кнопкой «Выйти из демо».
+The application contains three independent showcase versions.
 
----
+### Package 1: Landing Page
 
-## Демо-доступы / Demo credentials
+Route: `/landing`
 
-Учётные данные показаны прямо на страницах входа — это демо.
-В реальной системе они, разумеется, не видны конечному посетителю.
+A single page focused on lead generation. It is the simplest and fastest option
+for a client who mainly wants to collect rental enquiries.
 
-**Тариф 2 — админка сайта** (`/#/site/login`):
+Sections: hero, about, benefits, available offices, gallery preview,
+testimonials, contact information, lead form, and a closing call to action.
 
-| Email | Пароль | Роль |
-|---|---|---|
-| `admin@business.kz` | `admin123` | Администратор |
+### Package 2: Corporate Website
 
-**Тариф 3 — CRM** (`/#/crm/login`):
+Route: `/corporate`
 
-| Email | Пароль | Роль |
-|---|---|---|
-| `admin@crm.kz` | `admin123` | Администратор (всё + пользователи и настройки) |
-| `manager@crm.kz` | `manager123` | Менеджер (сделки, клиенты, задачи) |
-| `viewer@crm.kz` | `viewer123` | Наблюдатель (только просмотр) |
+A multi-page informational website. More complete than the landing page, without
+any management tools.
 
----
+Pages: Home, About, Offices, Gallery, Services, News, and Contact. It includes an
+office catalog, an amenities section, a news section with article pages, and
+inquiry forms.
 
-## Стек / Stack
+### Package 3: Premium Platform
 
-- **React 18** + **TypeScript** + **Vite**
-- **Tailwind CSS** — темы через CSS-переменные
-- **React Router v6** (HashRouter — работает на любом статик-хостинге и с локального диска)
-- **Zustand** — состояние + персистентность в localStorage
-- **lucide-react** — иконки, используются точечно
+Route: `/platform`
 
-## Темы (5) / Themes
+The most advanced package. It combines the public website with an authenticated
+area and a full CRM.
 
-`Blue`, `Brown`, `Black` (тёмная), `Silver`, `Green`. Переключатель в шапке любой страницы.
+It includes:
 
-## Языки (3) / Languages
+- Public website with offices, gallery, services, news, and contact pages
+- Authentication with a dedicated login route
+- Role based access for three roles (Admin, Manager, Tenant)
+- CRM dashboard with leads, bookings, and maintenance requests
+- Tenant management and office management
+- Tenant portal with leased spaces and invoices
+- Analytics style overview dashboards
 
-Қазақша / Русский / English — полная локализация всех трёх демо, переключатель в шапке.
+Demo accounts for Package 3:
 
-## Фото / Photos
+| Role    | Email            | Password    |
+| ------- | ---------------- | ----------- |
+| Admin   | admin@crm.kz     | admin123    |
+| Manager | manager@crm.kz   | manager123  |
+| Tenant  | viewer@crm.kz    | viewer123   |
 
-Галерея и фотовставки тянутся с Unsplash; при отсутствии сети каждая картинка
-автоматически подменяется локальным SVG-фоллбеком из `public/demo/` — демо работает офлайн.
+On the login screen you can click an account to fill the form, then sign in.
 
----
+## Features
 
-## Запуск / Run
+- Three independent website demos behind one selector
+- Multi language support with i18next (Russian, Kazakh, English). Russian is the
+  default. The language switcher is in the navbar of every package.
+- Theme system with six color themes (Corporate Blue, Emerald Green, Executive
+  Gold, Graphite Black, Modern Gray, Business Brown). The theme switcher is in the
+  navbar and applies across the whole application.
+- Responsive layout for mobile, tablet, and desktop, including working mobile
+  navigation and forms.
+- Mock backend in `localStorage`, with a reset option in the platform settings.
 
-```bash
-npm install
-npm run dev        # http://localhost:5173
-```
+## Technology stack
 
-Продакшн-сборка:
+- React 18 with TypeScript (strict mode)
+- Vite for development and build
+- React Router for routing
+- Zustand for state and the mock store
+- i18next and react-i18next for translations
+- Tailwind CSS with CSS variable based themes
+- lucide-react for icons
 
-```bash
-npm run build      # tsc -b && vite build → dist/
-npm run preview    # локальный просмотр сборки
-```
-
-`base: './'` + HashRouter: папку `dist/` можно открыть с любого статик-сервера
-или закинуть на Netlify/GitHub Pages без настройки.
-
----
-
-## Структура / Structure
+## Project structure
 
 ```
 src/
-  app/router.tsx          — все маршруты витрины
-  pages/
-    chooser/              — главная страница выбора тарифа
-    landing/              — тариф 1: лендинг
-    public/ + admin/      — тариф 2: сайт БЦ + админка
-    crm/                  — тариф 3: CRM (login, layout, 6 страниц)
-  features/
-    i18n/                 — словарь 3 языков
-    theme/                — 5 цветовых тем
-    crm/store.ts          — данные и логика CRM
-    ...                   — auth, offices, leads и т.д. (тариф 2)
-  shared/
-    photos.ts             — фото-библиотека с фоллбеками
-    components/           — UI-примитивы, навбары, карусель
-public/demo/              — офлайн SVG-фоллбеки
+  app/                 App root and router
+  i18n/                i18next config and ru, kk, en resources
+  pages/showcase/      Package selector (home page)
+  packages/landing/    Package 1
+  packages/corporate/  Package 2
+  pages/public/        Package 3 public website
+  pages/auth/          Package 3 login
+  pages/dashboard/     Package 3 CRM and tenant portal
+  store/               Zustand stores (offices, tenants, leads, theme, ...)
+  data/seed.ts         Demo seed data
+  shared/              Shared UI, layout, and marketing components
 ```
 
-## Сброс данных / Reset
+## Local launch
 
-Все данные демо лежат в `localStorage`. Сбросить: кнопка «Сбросить демо-данные»
-в настройках CRM, либо очистить localStorage сайта в браузере.
+Requirements: Node 18 or newer.
+
+```bash
+npm install
+npm run dev
+```
+
+Then open the URL printed by Vite, usually `http://localhost:5173`.
+
+Other scripts:
+
+```bash
+npm run build     # type check and build for production
+npm run preview   # serve the production build locally
+npm run lint      # type check only
+```
+
+## Deployment
+
+The build output is a static site, so it can be hosted on any static host.
+
+```bash
+npm run build
+```
+
+This creates a `dist` folder. Upload it to your host of choice, for example
+GitHub Pages, Netlify, or Vercel.
+
+The app uses hash based routing, so it works on static hosts and subpaths without
+extra server configuration. The Vite `base` is set to `./` for the same reason.
+
+## Screenshots
+
+Add screenshots here.
+
+- Package selector: `docs/screenshot-selector.png`
+- Package 1 landing page: `docs/screenshot-landing.png`
+- Package 2 corporate website: `docs/screenshot-corporate.png`
+- Package 3 platform dashboard: `docs/screenshot-platform.png`
+
+## Notes
+
+This is a demonstration project. The data is fictional and no real transactions
+take place.

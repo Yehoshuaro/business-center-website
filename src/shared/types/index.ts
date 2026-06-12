@@ -1,129 +1,235 @@
-// ===== Theme & i18n =====
-export type ThemeName = 'blue' | 'brown' | 'black' | 'silver' | 'green';
-export type LanguageCode = 'kk' | 'ru' | 'en';
+// =====================================================================
+// Domain types for the Meridian Business Center platform.
+// A single-language (English) premium commercial real-estate model.
+// =====================================================================
 
-// ===== Office =====
-export type OfficeStatus = 'available' | 'reserved' | 'occupied';
-export type OfficeType = 'openSpace' | 'cabinet' | 'block' | 'mixed';
+export type ThemeName = 'blue' | 'green' | 'gold' | 'black' | 'silver' | 'brown';
+
+// ===== Authentication & roles =====
+export type Role = 'admin' | 'manager' | 'viewer';
+
+export interface Account {
+  id: string;
+  email: string;
+  password: string; // demo only — never displayed after login
+  fullName: string;
+  role: Role;
+  status: 'active' | 'disabled';
+  /** Viewers are linked to the tenant company they belong to. */
+  tenantId?: string;
+  title?: string; // job title, shown in profile
+  createdAt: string;
+}
+
+/** The trimmed account object kept in the session (no password). */
+export interface Session {
+  id: string;
+  email: string;
+  fullName: string;
+  role: Role;
+  tenantId?: string;
+  title?: string;
+  loggedInAt: string;
+}
+
+// ===== Office / leasable space =====
+export type SpaceStatus = 'available' | 'reserved' | 'occupied';
+export type SpaceType = 'open-plan' | 'private-office' | 'suite' | 'coworking';
 
 export interface Office {
   id: string;
+  code: string; // e.g. "08-02"
   title: string;
   floor: number;
   area: number; // m²
-  type: OfficeType;
-  status: OfficeStatus;
-  price: number | null; // null = "по запросу"
+  capacity: number; // workstations
+  type: SpaceType;
+  status: SpaceStatus;
+  monthlyPrice: number | null; // null = "on request"
   description: string;
   features: string[];
-  images: string[]; // placeholder strings for now
+  photo: string; // PhotoKey
+  featured: boolean;
+  tenantId?: string; // set when occupied
 }
 
-// ===== Conference Room =====
-export type ConferenceStatus = 'available' | 'reserved' | 'occupied';
-
-export interface ConferenceRoom {
+// ===== Meeting / conference rooms (bookable) =====
+export interface MeetingRoom {
   id: string;
   name: string;
   capacity: number;
   area: number;
-  hourlyPrice: number | null;
-  status: ConferenceStatus;
-  equipment: string[];
+  hourlyPrice: number;
+  floor: number;
+  amenities: string[];
   description: string;
+  photo: string; // PhotoKey
 }
 
-// ===== Tenant =====
+// ===== Tenant company =====
 export interface Tenant {
   id: string;
   companyName: string;
-  category: string;
+  industry: string;
+  logoText: string; // initials for avatar
   floor: number;
-  officeNumber: string;
-  description: string;
+  officeCode: string;
+  headcount: number;
+  since: string; // ISO date lease started
+  contactName: string;
+  contactEmail: string;
+  phone: string;
   website?: string;
-  contactEmail?: string;
-  phone?: string;
+  description: string;
   isPublished: boolean;
 }
 
-// ===== Lead =====
-export type LeadInterestType = 'office' | 'conference' | 'general';
-export type LeadStatus = 'new' | 'contacted' | 'inProgress' | 'closed';
+// ===== Leads (sales pipeline) =====
+export type LeadInterest = 'office' | 'meeting-room' | 'coworking' | 'general';
+export type LeadStatus = 'new' | 'contacted' | 'touring' | 'negotiation' | 'won' | 'lost';
 
-export interface LeadComment {
+export interface LeadNote {
   id: string;
   author: string;
   text: string;
-  createdAt: string; // ISO
+  createdAt: string;
 }
 
 export interface Lead {
   id: string;
   name: string;
-  phone: string;
+  company?: string;
   email: string;
-  interestType: LeadInterestType;
+  phone: string;
+  interest: LeadInterest;
   message: string;
   status: LeadStatus;
-  createdAt: string; // ISO
-  comments: LeadComment[];
-  relatedItemId?: string; // optional reference to office/room
+  estimatedValue: number; // monthly value KZT
+  source: string; // website, referral, walk-in...
+  createdAt: string;
+  notes: LeadNote[];
+  relatedSpaceId?: string;
 }
 
-// ===== Admin user =====
-export type AdminUserRole = 'admin' | 'manager' | 'viewer';
-export type AdminUserStatus = 'active' | 'disabled';
+// ===== Bookings (meeting rooms) =====
+export type BookingStatus = 'confirmed' | 'pending' | 'cancelled';
 
-export interface AdminUser {
+export interface Booking {
   id: string;
-  fullName: string;
-  email: string;
-  role: AdminUserRole;
-  status: AdminUserStatus;
+  roomId: string;
+  tenantId?: string;
+  title: string;
+  organizer: string;
+  date: string; // ISO date (yyyy-mm-dd)
+  startTime: string; // "09:00"
+  endTime: string; // "10:30"
+  attendees: number;
+  status: BookingStatus;
+  createdAt: string;
+}
+
+// ===== Maintenance requests =====
+export type MaintenancePriority = 'low' | 'medium' | 'high' | 'urgent';
+export type MaintenanceStatus = 'open' | 'in-progress' | 'resolved' | 'closed';
+export type MaintenanceCategory =
+  | 'hvac'
+  | 'electrical'
+  | 'plumbing'
+  | 'cleaning'
+  | 'access'
+  | 'it'
+  | 'other';
+
+export interface MaintenanceUpdate {
+  id: string;
+  author: string;
+  text: string;
+  createdAt: string;
+}
+
+export interface MaintenanceRequest {
+  id: string;
+  ref: string; // human ref e.g. "MR-1042"
+  tenantId: string;
+  spaceCode: string;
+  category: MaintenanceCategory;
+  priority: MaintenancePriority;
+  subject: string;
+  description: string;
+  status: MaintenanceStatus;
+  createdBy: string;
+  createdAt: string;
+  updates: MaintenanceUpdate[];
+}
+
+// ===== Invoices =====
+export type InvoiceStatus = 'paid' | 'due' | 'overdue';
+
+export interface InvoiceLine {
+  label: string;
+  amount: number;
+}
+
+export interface Invoice {
+  id: string;
+  number: string; // "INV-2026-0042"
+  tenantId: string;
+  period: string; // "June 2026"
+  issuedAt: string; // ISO
+  dueAt: string; // ISO
+  status: InvoiceStatus;
+  lines: InvoiceLine[];
 }
 
 // ===== Gallery =====
 export interface GalleryImage {
   id: string;
-  src: string;             // URL or /demo/*.svg path
-  fallback?: string;       // local image used if src fails to load
-  title: LocalizedText;
-  caption: LocalizedText;
-  order: number;
-  isPublished: boolean;
+  photo: string; // PhotoKey
+  title: string;
+  caption: string;
+  category: 'architecture' | 'interiors' | 'amenities' | 'events';
 }
 
 // ===== News =====
 export interface NewsArticle {
   id: string;
   slug: string;
-  cover: string;           // image path
-  coverFallback?: string;  // local image used if cover fails to load
-  title: LocalizedText;
-  excerpt: LocalizedText;
-  body: LocalizedText;
+  photo: string; // PhotoKey
   tag: string;
-  publishedAt: string;     // ISO
+  title: string;
+  excerpt: string;
+  body: string[]; // paragraphs
+  author: string;
+  publishedAt: string;
   isPublished: boolean;
 }
 
-// ===== Site settings =====
-export interface LocalizedText {
-  kk: string;
-  ru: string;
-  en: string;
+// ===== Testimonials =====
+export interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
 }
 
+// ===== Services / amenities =====
+export interface Service {
+  id: string;
+  icon: string; // lucide icon name
+  title: string;
+  description: string;
+}
+
+// ===== Site settings =====
 export interface SiteSettings {
-  businessCenterName: string;
+  centerName: string;
+  tagline: string;
   address: string;
+  city: string;
   phone: string;
   email: string;
   workingHours: string;
   theme: ThemeName;
-  language: LanguageCode;
-  heroTitle: LocalizedText;
-  heroSubtitle: LocalizedText;
-  aboutText: LocalizedText;
+  foundedYear: number;
 }

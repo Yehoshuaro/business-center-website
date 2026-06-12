@@ -1,89 +1,75 @@
-import { Link, useParams, Navigate } from 'react-router-dom';
-import { ChevronLeft, ArrowUpRight } from 'lucide-react';
-import { useT } from '@/features/i18n/store';
-import { PhotoImg } from '@/shared/components/ui/PhotoImg';
-import { useNewsStore } from '@/features/news/store';
-import { formatDate } from '@/shared/utils';
+import { Link, useParams } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { useNewsStore } from '@/store/news';
+import { formatDay } from '@/shared/utils';
+import { Photo, Avatar } from '@/shared/components/ui';
 
 export const NewsDetailPage = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const { t, language } = useT();
-  const article = useNewsStore((s) => s.items.find((n) => n.slug === slug && n.isPublished));
-  const others = useNewsStore((s) => s.items)
-    .filter((n) => n.isPublished && n.slug !== slug)
-    .slice(0, 3);
-  const locale = ({ kk: 'kk-KZ', ru: 'ru-RU', en: 'en-US' } as const)[language];
+  const { slug } = useParams();
+  const news = useNewsStore((s) => s.items);
+  const article = news.find((n) => n.slug === slug && n.isPublished);
 
-  if (!article) return <Navigate to="/site/news" replace />;
+  if (!article) {
+    return (
+      <div className="container-page py-24 text-center">
+        <h1 className="font-display text-3xl">Article not found</h1>
+        <Link to="/news" className="btn-primary mt-6">Back to news</Link>
+      </div>
+    );
+  }
+
+  const more = news.filter((n) => n.isPublished && n.id !== article.id).slice(0, 2);
 
   return (
-    <div className="container-page py-12 md:py-16">
-      <Link
-        to="/site/news"
-        className="inline-flex items-center gap-1 text-sm text-ink-muted hover:text-ink mb-8"
-      >
-        <ChevronLeft size={16} /> {t('common.back')}
-      </Link>
+    <article>
+      <div className="container-page pt-8">
+        <Link to="/news" className="inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink">
+          <ArrowLeft className="h-4 w-4" /> All news
+        </Link>
+      </div>
 
-      <article className="max-w-3xl">
-        <div className="flex items-center gap-3 mb-5 text-[11px] uppercase tracking-[0.18em] text-ink-muted">
-          <span>{article.tag}</span>
-          <span className="w-1 h-1 rounded-full bg-line-strong" />
-          <span>{formatDate(article.publishedAt, locale)}</span>
+      <header className="container-page max-w-3xl py-8 text-center">
+        <div className="flex items-center justify-center gap-3 text-xs text-ink-subtle">
+          <span className="badge-accent">{article.tag}</span>
+          <span>{formatDay(article.publishedAt)}</span>
         </div>
-
-        <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1] text-balance break-words">
-          {article.title[language] || article.title.ru}
-        </h1>
-
-        <p className="mt-5 sm:mt-6 text-base sm:text-lg text-ink-muted leading-relaxed max-w-2xl">
-          {article.excerpt[language] || article.excerpt.ru}
-        </p>
-
-        <div className="mt-8 sm:mt-10 aspect-[16/9] border border-line overflow-hidden bg-surface-2">
-          <PhotoImg
-            src={article.cover}
-            fallback={article.coverFallback}
-            alt={article.title[language] || article.title.ru}
-            className="w-full h-full object-cover"
-          />
+        <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-balance md:text-5xl">{article.title}</h1>
+        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-ink-muted">
+          <Avatar name={article.author} className="h-7 w-7 text-[10px]" /> {article.author}
         </div>
+      </header>
 
-        <div className="mt-8 sm:mt-10 prose-bc">
-          {(article.body[language] || article.body.ru)
-            .split(/\n\s*\n/)
-            .map((p, i) => (
-              <p key={i} className="text-base md:text-lg leading-relaxed text-ink mb-5">
-                {p}
-              </p>
-            ))}
+      <div className="container-page max-w-4xl">
+        <Photo name={article.photo} alt={article.title} className="aspect-[16/9] ring-soft" />
+      </div>
+
+      <div className="container-page max-w-2xl py-10">
+        <p className="font-display text-xl leading-relaxed text-ink">{article.excerpt}</p>
+        <div className="mt-6 space-y-5 text-ink-muted leading-relaxed">
+          {article.body.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
         </div>
-      </article>
+      </div>
 
-      {others.length > 0 && (
-        <section className="mt-14 sm:mt-20 border-t border-line pt-10 sm:pt-12">
-          <div className="eyebrow mb-6">{t('news.more')}</div>
-          <div className="grid gap-px bg-line border border-line sm:grid-cols-2 lg:grid-cols-3">
-            {others.map((n) => (
-              <Link
-                key={n.id}
-                to={`/site/news/${n.slug}`}
-                className="bg-surface p-6 hover:bg-surface-2 transition-colors group"
-              >
-                <div className="text-[11px] uppercase tracking-[0.18em] text-ink-muted mb-3">
-                  {formatDate(n.publishedAt, locale)}
-                </div>
-                <div className="font-display text-xl tracking-tight leading-snug mb-3">
-                  {n.title[language] || n.title.ru}
-                </div>
-                <div className="inline-flex items-center gap-1 text-sm text-ink-muted group-hover:text-accent transition-colors">
-                  {t('common.details')} <ArrowUpRight size={14} />
-                </div>
-              </Link>
-            ))}
+      {more.length > 0 && (
+        <section className="border-t border-line bg-surface-2">
+          <div className="container-page py-14">
+            <h2 className="font-display text-2xl">More from Meridian</h2>
+            <div className="mt-6 grid gap-6 sm:grid-cols-2">
+              {more.map((n) => (
+                <Link key={n.id} to={`/news/${n.slug}`} className="group flex gap-4">
+                  <Photo name={n.photo} alt={n.title} className="aspect-square w-28 shrink-0" />
+                  <div>
+                    <div className="text-xs text-ink-subtle">{formatDay(n.publishedAt)}</div>
+                    <h3 className="mt-1 font-display text-lg leading-snug group-hover:underline">{n.title}</h3>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </section>
       )}
-    </div>
+    </article>
   );
 };

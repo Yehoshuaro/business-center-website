@@ -6,28 +6,15 @@ interface ModalProps {
   open: boolean;
   onClose: () => void;
   title: string;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  description?: string;
   children: React.ReactNode;
   footer?: React.ReactNode;
-  /**
-   * When true the modal renders the body without padding so callers
-   * (e.g. forms) can manage their own structure inside.
-   */
-  bodyClassName?: string;
+  size?: 'md' | 'lg' | 'xl';
 }
 
-const SIZE_MAX = {
-  sm: 'max-w-md',
-  md: 'max-w-lg',
-  lg: 'max-w-2xl',
-  xl: 'max-w-3xl',
-} as const;
+const SIZES = { md: 'max-w-md', lg: 'max-w-2xl', xl: 'max-w-4xl' } as const;
 
-/**
- * Shared modal shell — overlay, header with close, scrollable body, sticky footer.
- * Locks body scroll while open, closes on Escape and overlay click.
- */
-export const Modal = ({ open, onClose, title, size = 'lg', children, footer, bodyClassName }: ModalProps) => {
+export const Modal = ({ open, onClose, title, description, children, footer, size = 'lg' }: ModalProps) => {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
@@ -41,27 +28,20 @@ export const Modal = ({ open, onClose, title, size = 'lg', children, footer, bod
   }, [open, onClose]);
 
   if (!open) return null;
-
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true" aria-label={title}>
-      <div
-        className="absolute inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      <div className={cn('modal-card', SIZE_MAX[size])}>
+      <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
+      <div className={cn('modal-card', SIZES[size])}>
         <div className="modal-head">
-          <h2 className="font-display text-lg sm:text-2xl tracking-tight truncate">{title}</h2>
-          <button
-            type="button"
-            onClick={onClose}
-            className="inline-flex items-center justify-center w-10 h-10 -mr-2 shrink-0"
-            aria-label="Close"
-          >
-            <X size={18} />
+          <div className="min-w-0">
+            <h2 className="font-display text-xl tracking-tight truncate">{title}</h2>
+            {description && <p className="text-sm text-ink-muted mt-0.5">{description}</p>}
+          </div>
+          <button type="button" className="btn-ghost btn-sm -mr-2" onClick={onClose} aria-label="Close">
+            <X className="h-4 w-4" />
           </button>
         </div>
-        <div className={cn('modal-body', bodyClassName)}>{children}</div>
+        <div className="modal-body">{children}</div>
         {footer && <div className="modal-foot">{footer}</div>}
       </div>
     </div>
